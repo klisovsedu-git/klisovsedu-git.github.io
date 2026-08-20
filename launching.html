@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сайт запускається — ITS Network Academies</title>
+<meta name="description" content="Сайт мережевих академій ІТС КПІ ось-ось запуститься. Поки чекаєш — зіграй у міні-гру «Мережевий захисник».">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2711%27 fill=%27%2300BCEB%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  body{ overflow-x:hidden; }
+
+  /* ---- minimal, link-free header (brand only, not clickable) ---- */
+  .launch-topbar{
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+  }
+  .launch-topbar .inner{
+    max-width: 1180px; margin:0 auto; padding: 0 28px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .launch-topbar .node{
+    width: 26px; height:26px; border-radius:7px;
+    background: linear-gradient(135deg, var(--cisco), var(--cisco-dim));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 16px var(--cisco-glow); flex:none;
+  }
+  .launch-topbar .node svg{ width:15px; height:15px; }
+  .launch-topbar .name{ font-family: var(--font-display); font-weight:700; font-size: 16px; }
+  .launch-topbar .name small{ display:block; font-family: var(--font-mono); font-weight:400; font-size:11px; color:var(--text-dim); }
+
+  .game-page{ padding: 44px 0 80px; }
+  .game-head{ max-width: 640px; margin: 0 auto 30px; text-align:center; }
+  .game-head h1{ font-size: clamp(26px,4vw,38px); margin: 14px 0 12px; }
+  .game-head p{ color: var(--text-dim); font-size: 15px; }
+
+  .launch-note{
+    max-width: 620px; margin: 30px auto 0;
+    display:flex; align-items:center; gap:12px;
+    background: var(--bg-panel); border:1px solid var(--line);
+    border-radius: var(--radius-md); padding: 16px 20px;
+    font-family: var(--font-mono); font-size: 12.5px; color: var(--text-dim);
+  }
+  .launch-note svg{ width:18px; height:18px; flex:none; color: var(--cisco); }
+
+  .game-shell{
+    max-width: 620px; margin: 0 auto;
+    background: linear-gradient(180deg, var(--bg-panel-2), var(--bg-panel));
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 20px; position:relative; overflow:hidden;
+  }
+
+  .hud{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:14px; margin-bottom: 14px; font-family: var(--font-mono);
+  }
+  .hud-group{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .hud-item{ display:flex; flex-direction:column; gap:2px; }
+  .hud-item .lbl{ font-size:10px; letter-spacing:.1em; color: var(--text-faint); text-transform:uppercase; }
+  .hud-item .val{ font-size:19px; font-weight:600; color: var(--text); }
+  .lives{ display:flex; gap:5px; }
+  .lives .shield{ width:16px; height:16px; opacity:.25; transition: opacity .2s ease; }
+  .lives .shield.on{ opacity:1; }
+  .lives svg{ width:100%; height:100%; color: var(--ok); }
+
+  .arena{
+    position:relative;
+    height: min(58vh, 460px);
+    min-height: 320px;
+    border-radius: var(--radius-md);
+    background:
+      radial-gradient(circle at 50% 100%, rgba(0,188,235,0.08), transparent 60%),
+      var(--bg-raised);
+    border: 1px solid var(--line-strong);
+    overflow: hidden;
+    touch-action: manipulation;
+  }
+  .arena::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 34px 34px;
+    opacity:.5; pointer-events:none;
+  }
+  .arena-base{
+    position:absolute; left:0; right:0; bottom:0; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--danger), transparent);
+    box-shadow: 0 0 12px 1px var(--danger);
+    opacity:.6;
+  }
+
+  .packet{
+    position:absolute; top:-50px; left:0;
+    width: 78px; height:44px;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    border-radius: 10px; cursor:pointer; user-select:none;
+    font-family: var(--font-mono); font-size: 11px; font-weight:600;
+    border:1px solid; will-change: transform;
+    transition: box-shadow .15s ease;
+  }
+  .packet svg{ width:16px; height:16px; flex:none; }
+  .packet.attack{
+    background: rgba(255,93,108,0.12); border-color: var(--danger); color: var(--danger);
+    box-shadow: 0 0 16px -2px rgba(255,93,108,.5);
+  }
+  .packet.legit{
+    background: rgba(47,224,168,0.1); border-color: var(--ok); color: var(--ok);
+    box-shadow: 0 0 16px -2px rgba(47,224,168,.4);
+  }
+  .packet.pop{ animation: popOut .22s ease forwards; pointer-events:none; }
+  @keyframes popOut{ to{ transform: scale(1.7); opacity:0; } }
+  .packet.leak{ animation: leakFlash .3s ease; }
+  @keyframes leakFlash{ 0%,100%{ filter:none;} 50%{ filter: brightness(2); } }
+
+  .float-pts{
+    position:absolute; font-family: var(--font-mono); font-weight:700; font-size:14px;
+    pointer-events:none; animation: floatUp .6s ease forwards;
+  }
+  @keyframes floatUp{ 0%{ opacity:1; transform: translateY(0); } 100%{ opacity:0; transform: translateY(-34px); } }
+
+  .overlay{
+    position:absolute; inset:0; z-index: 10;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding: 26px;
+    background: rgba(8,12,22,0.88); backdrop-filter: blur(3px);
+  }
+  .overlay.hidden{ display:none; }
+  .overlay .badge-icon{
+    width:64px; height:64px; border-radius:16px; margin-bottom:18px;
+    background: var(--bg-panel); border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .overlay .badge-icon svg{ width:30px; height:30px; color: var(--cisco); }
+  .overlay h2{ font-size: 21px; margin-bottom: 10px; }
+  .overlay p{ color: var(--text-dim); font-size: 13.5px; max-width: 380px; margin: 0 0 18px; }
+
+  .legend{ display:flex; gap:18px; margin-bottom: 22px; flex-wrap:wrap; justify-content:center; }
+  .legend-item{ display:flex; align-items:center; gap:8px; font-family: var(--font-mono); font-size:12px; color: var(--text-dim); }
+  .legend-swatch{ width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; border:1px solid; flex:none; }
+  .legend-swatch svg{ width:13px; height:13px; }
+  .legend-swatch.a{ border-color: var(--danger); color: var(--danger); background: rgba(255,93,108,.1); }
+  .legend-swatch.l{ border-color: var(--ok); color: var(--ok); background: rgba(47,224,168,.1); }
+
+  .score-line{ display:flex; gap:26px; margin-bottom: 22px; }
+  .score-line .s{ text-align:center; }
+  .score-line .s b{ display:block; font-family: var(--font-display); font-size: 26px; }
+  .score-line .s span{ font-family: var(--font-mono); font-size: 10.5px; color: var(--text-faint); text-transform:uppercase; letter-spacing:.08em; }
+
+  .game-actions{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top: 6px; }
+
+  .launch-footer{
+    text-align:center; margin-top: 34px;
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-faint);
+  }
+
+  @media (max-width: 560px){
+    .game-shell{ padding: 14px; }
+    .packet{ width: 66px; height:40px; font-size:10px; }
+    .hud-item .val{ font-size:16px; }
+    .score-line{ gap:18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="launch-topbar">
+  <div class="inner">
+    <span class="node"><svg viewBox="0 0 24 24" fill="none"><circle cx="4" cy="18" r="2" fill="white"/><circle cx="9" cy="18" r="2" fill="white"/><circle cx="14" cy="18" r="2" fill="white"/><circle cx="19" cy="18" r="2" fill="white"/><circle cx="6.5" cy="11" r="2" fill="white"/><circle cx="11.5" cy="11" r="2" fill="white"/><circle cx="16.5" cy="11" r="2" fill="white"/><circle cx="9" cy="4" r="2" fill="white"/><circle cx="14" cy="4" r="2" fill="white"/></svg></span>
+    <span class="name">ITS NETWORK ACADEMIES<small>НН ІТС КПІ ім. Ігоря Сікорського</small></span>
+  </div>
+</div>
+
+<main class="wrap game-page">
+  <div class="game-head">
+    <div class="eyebrow" style="justify-content:center"><span class="dot" style="background:var(--warn)"></span> САЙТ ЗАПУСКАЄТЬСЯ</div>
+    <h1>Ми ще налаштовуємо мережу.</h1>
+    <p>Поки ми запускаємо сайт — потренуй реакцію в міні-грі: блокуй атаки, пропускай легальний трафік.</p>
+  </div>
+
+  <div class="game-shell">
+    <div class="hud">
+      <div class="hud-group">
+        <div class="hud-item"><span class="lbl">Рахунок</span><span class="val" id="scoreVal">0</span></div>
+        <div class="hud-item"><span class="lbl">Рекорд</span><span class="val" id="bestVal">0</span></div>
+      </div>
+      <div class="hud-item">
+        <span class="lbl">Захист</span>
+        <div class="lives" id="livesRow"></div>
+      </div>
+    </div>
+
+    <div class="arena" id="arena">
+      <div class="arena-base"></div>
+
+      <div class="overlay" id="startOverlay">
+        <div class="badge-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <h2>Мережевий захисник</h2>
+        <p>Клацай на червоні пакети-загрози, щоб заблокувати їх. Не чіпай зелені — це легальний трафік. Пропустиш атаку — втратиш щит.</p>
+        <div class="legend">
+          <div class="legend-item"><span class="legend-swatch a"><svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a1.8 1.8 0 001.6 2.7h15.4a1.8 1.8 0 001.6-2.7L13.7 3.9a1.8 1.8 0 00-3.4 0z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span> Атака — клікни!</div>
+          <div class="legend-item"><span class="legend-swatch l"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Легальний — не чіпай</div>
+        </div>
+        <button class="btn btn-cisco" id="startBtn">Почати гру ▶</button>
+      </div>
+
+      <div class="overlay hidden" id="overOverlay">
+        <div class="badge-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <h2 id="overTitle">Мережу зламано</h2>
+        <p id="overText">Три атаки пройшли захист.</p>
+        <div class="score-line">
+          <div class="s"><b id="finalScore">0</b><span>Рахунок</span></div>
+          <div class="s"><b id="finalBest">0</b><span>Рекорд</span></div>
+        </div>
+        <div class="game-actions">
+          <button class="btn btn-cisco" id="retryBtn">Ще раз ↻</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="launch-note">
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v.01M12 11v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Сайт наразі в процесі запуску. Функціонал і сторінки з'являться найближчим часом — оновіть сторінку пізніше, щоб перевірити статус.</span>
+  </div>
+
+  <div class="launch-footer">© 2026 ITS Network Academies · НН ІТС КПІ ім. Ігоря Сікорського</div>
+</main>
+
+<script>
+function initGame(){
+  const arena = document.getElementById('arena');
+  const startOverlay = document.getElementById('startOverlay');
+  const overOverlay = document.getElementById('overOverlay');
+  const startBtn = document.getElementById('startBtn');
+  const retryBtn = document.getElementById('retryBtn');
+  const scoreVal = document.getElementById('scoreVal');
+  const bestVal = document.getElementById('bestVal');
+  const livesRow = document.getElementById('livesRow');
+  const finalScore = document.getElementById('finalScore');
+  const finalBest = document.getElementById('finalBest');
+  const overTitle = document.getElementById('overTitle');
+  const overText = document.getElementById('overText');
+
+  const SHIELD_SVG = '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" fill="currentColor"/></svg>';
+  const ATTACK_ICON = '<svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a1.8 1.8 0 001.6 2.7h15.4a1.8 1.8 0 001.6-2.7L13.7 3.9a1.8 1.8 0 00-3.4 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+  const LEGIT_ICON = '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  const MAX_LIVES = 3;
+  const BEST_KEY = 'its_academies_defender_best';
+
+  let best = parseInt(localStorage.getItem(BEST_KEY) || '0', 10) || 0;
+  bestVal.textContent = best;
+
+  let score = 0, lives = MAX_LIVES, running = false, rafId = null;
+  let lastSpawn = 0, spawnInterval = 1100, lastTime = 0, elapsed = 0;
+  let packets = [];
+  let idCounter = 0;
+
+  function renderLives(){
+    livesRow.innerHTML = '';
+    for (let i=0;i<MAX_LIVES;i++){
+      const s = document.createElement('span');
+      s.className = 'shield' + (i < lives ? ' on' : '');
+      s.innerHTML = SHIELD_SVG;
+      livesRow.appendChild(s);
+    }
+  }
+
+  function reset(){
+    score = 0; lives = MAX_LIVES; spawnInterval = 1100; elapsed = 0; lastSpawn = 0;
+    packets.forEach(p => p.el.remove());
+    packets = [];
+    scoreVal.textContent = '0';
+    renderLives();
+  }
+
+  function floatText(x, y, text, color){
+    const el = document.createElement('div');
+    el.className = 'float-pts';
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.color = color;
+    el.textContent = text;
+    arena.appendChild(el);
+    setTimeout(() => el.remove(), 650);
+  }
+
+  function spawnPacket(){
+    const w = arena.clientWidth;
+    const isAttack = Math.random() < 0.45;
+    const el = document.createElement('div');
+    const id = ++idCounter;
+    el.className = 'packet ' + (isAttack ? 'attack' : 'legit');
+    el.innerHTML = (isAttack ? ATTACK_ICON : LEGIT_ICON) + '<span>' + (isAttack ? 'ATTACK' : 'HTTPS') + '</span>';
+    const pw = 78;
+    const x = Math.max(8, Math.min(w - pw - 8, Math.random() * (w - pw)));
+    el.style.left = x + 'px';
+    arena.appendChild(el);
+
+    const speed = 60 + Math.min(140, elapsed / 900);
+    const packet = { id, el, y: -50, speed, isAttack, dead:false };
+
+    el.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      if (packet.dead || !running) return;
+      handleHit(packet);
+    });
+
+    packets.push(packet);
+  }
+
+  function handleHit(packet){
+    packet.dead = true;
+    const rect = packet.el.getBoundingClientRect();
+    const arenaRect = arena.getBoundingClientRect();
+    const relX = rect.left - arenaRect.left + rect.width/2 - 10;
+    const relY = rect.top - arenaRect.top;
+
+    if (packet.isAttack){
+      score += 10;
+      floatText(relX, relY, '+10', 'var(--ok)');
+      packet.el.classList.add('pop');
+    } else {
+      score = Math.max(0, score - 5);
+      floatText(relX, relY, '-5', 'var(--danger)');
+      packet.el.classList.add('leak');
+      setTimeout(() => packet.el.classList.add('pop'), 200);
+    }
+    scoreVal.textContent = score;
+    setTimeout(() => packet.el.remove(), 260);
+  }
+
+  function missPacket(packet){
+    packet.dead = true;
+    if (packet.isAttack){
+      lives -= 1;
+      renderLives();
+      const rect = packet.el.getBoundingClientRect();
+      const arenaRect = arena.getBoundingClientRect();
+      floatText(rect.left - arenaRect.left, arena.clientHeight - 40, 'ПРОБИТО!', 'var(--danger)');
+      packet.el.remove();
+      if (lives <= 0){
+        endGame();
+        return;
+      }
+    } else {
+      score += 2;
+      scoreVal.textContent = score;
+      packet.el.remove();
+    }
+  }
+
+  function loop(ts){
+    if (!running) return;
+    if (!lastTime) lastTime = ts;
+    const dt = Math.min(48, ts - lastTime);
+    lastTime = ts;
+    elapsed += dt;
+
+    if (ts - lastSpawn > spawnInterval){
+      spawnPacket();
+      lastSpawn = ts;
+      spawnInterval = Math.max(430, 1100 - elapsed / 55);
+    }
+
+    const h = arena.clientHeight;
+    packets = packets.filter(p => {
+      if (p.dead) return false;
+      p.y += p.speed * (dt/1000);
+      p.el.style.transform = `translateY(${p.y}px)`;
+      if (p.y > h - 10){
+        missPacket(p);
+        return false;
+      }
+      return true;
+    });
+
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function startGame(){
+    reset();
+    startOverlay.classList.add('hidden');
+    overOverlay.classList.add('hidden');
+    running = true;
+    lastTime = 0;
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function endGame(){
+    running = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    packets.forEach(p => p.el.remove());
+    packets = [];
+
+    if (score > best){
+      best = score;
+      localStorage.setItem(BEST_KEY, String(best));
+    }
+    bestVal.textContent = best;
+    finalScore.textContent = score;
+    finalBest.textContent = best;
+    overTitle.textContent = score >= best && score > 0 ? 'Новий рекорд!' : 'Мережу зламано';
+    overText.textContent = 'Три атаки пройшли захист. Фінальний рахунок: ' + score + '.';
+    overOverlay.classList.remove('hidden');
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && running){
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+    }
+  });
+
+  startBtn.addEventListener('click', startGame);
+  retryBtn.addEventListener('click', startGame);
+  renderLives();
+}
+
+initGame();
+</script>
+</body>
+</html>

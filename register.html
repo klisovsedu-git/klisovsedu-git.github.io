@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Реєстрація на курс — Cisco Networking Academy</title>
+<meta name="description" content="Реєстрація на курси Cisco Networking Academy НН ІТС КПІ ім. Ігоря Сікорського.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2711%27 fill=%27%2300BCEB%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/data.js" defer></script>
+<style>
+  .reg-shell{
+    min-height: calc(100svh - 71px);
+    display:flex; align-items:center; justify-content:center;
+    padding: 48px 0 60px;
+  }
+  .reg-card{
+    width: 100%; max-width: 620px;
+    background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 40px;
+  }
+  .reg-card h1{ font-size: clamp(24px,3.4vw,30px); margin: 12px 0 8px; }
+  .reg-card > p{ color: var(--text-dim); font-size: 14.5px; margin: 0 0 30px; }
+
+  .form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field{ display:flex; flex-direction:column; gap:7px; }
+  .field.full{ grid-column: 1 / -1; }
+  .field label{ font-size:12.5px; font-family: var(--font-mono); color: var(--text-dim); }
+  .field input, .field select, .field textarea{
+    background: var(--bg-raised); border:1px solid var(--line-strong); color: var(--text);
+    border-radius: 10px; padding: 12px 14px; font-family: var(--font-body); font-size: 14px;
+  }
+  .field textarea{ resize: vertical; min-height: 70px; }
+  .field select{
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7l5 5 5-5' stroke='%238B99B8' stroke-width='1.6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .form-note{ font-size:12px; color: var(--text-faint); margin-top:14px; }
+  .form-submit{ margin-top: 18px; width:100%; }
+  .form-msg{
+    margin-top:16px; padding: 12px 14px; border-radius: 10px;
+    background: rgba(47,224,168,.08); border: 1px solid rgba(47,224,168,.3);
+    font-size:13px; font-family: var(--font-mono); color: var(--ok); display:none;
+  }
+  .form-msg.show{ display:block; }
+
+  @media (max-width: 700px){
+    .form-grid{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px){
+    .reg-card{ padding: 26px 20px; border-radius: var(--radius-md); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="back-btn" href="cisco.html" title="До академії">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>До академії</span>
+    </a>
+    <a class="brand" href="cisco.html">
+      <span class="node"><svg viewBox="0 0 24 24" fill="none"><circle cx="4" cy="18" r="2" fill="white"/><circle cx="9" cy="18" r="2" fill="white"/><circle cx="14" cy="18" r="2" fill="white"/><circle cx="19" cy="18" r="2" fill="white"/><circle cx="6.5" cy="11" r="2" fill="white"/><circle cx="11.5" cy="11" r="2" fill="white"/><circle cx="16.5" cy="11" r="2" fill="white"/><circle cx="9" cy="4" r="2" fill="white"/><circle cx="14" cy="4" r="2" fill="white"/></svg></span>
+      <span>CISCO ACADEMY<small>Реєстрація на курс</small></span>
+    </a>
+  </div>
+</nav>
+
+<main class="wrap reg-shell">
+  <div class="reg-card" data-reveal>
+    <div class="eyebrow"><span class="dot"></span> ЗАПИС НА НАВЧАННЯ</div>
+    <h1>Реєстрація на курси CCNA</h1>
+    <p>Заповніть форму — і ми зв'яжемось з вами для підтвердження та подальших інструкцій щодо старту курсу.</p>
+
+    <form id="regForm" onsubmit="return false;">
+      <div class="form-grid">
+        <div class="field"><label for="lastname">Прізвище</label><input id="lastname" type="text" required></div>
+        <div class="field"><label for="firstname">Ім'я</label><input id="firstname" type="text" required></div>
+        <div class="field"><label for="uni">ЗВО</label><input id="uni" type="text" placeholder="напр. КПІ ім. Ігоря Сікорського"></div>
+        <div class="field"><label for="faculty">Факультет</label><input id="faculty" type="text" placeholder="напр. ІТС"></div>
+        <div class="field"><label for="email">Електронна пошта</label><input id="email" type="email" required></div>
+        <div class="field"><label for="phone">Номер телефону</label><input id="phone" type="tel"></div>
+        <div class="field full"><label for="course">Оберіть курс</label>
+          <select id="course"><option>-- Оберіть курс --</option></select>
+        </div>
+        <div class="field full"><label for="comments">Додаткові коментарі</label><textarea id="comments" placeholder="Необов'язково"></textarea></div>
+      </div>
+      <button class="btn btn-cisco form-submit" type="submit">Зареєструватись</button>
+      <div class="form-note">Після реєстрації ми зв'яжемося з вами для підтвердження на вказану пошту.</div>
+      <div class="form-msg" id="formMsg">✓ Заявку прийнято — очікуйте лист на вказану пошту.</div>
+    </form>
+  </div>
+</main>
+
+<script src="assets/script.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const select = document.getElementById('course');
+    if (typeof COURSES === 'undefined') return;
+    const grouped = {};
+    CATEGORY_ORDER.forEach(c => grouped[c] = []);
+    COURSES.forEach(c => { (grouped[c.category] ||= []).push(c); });
+    Object.entries(grouped).forEach(([cat, list]) => {
+      if (!list.length) return;
+      const og = document.createElement('optgroup');
+      og.label = cat;
+      list.forEach(c => {
+        const opt = document.createElement('option');
+        opt.textContent = c.name;
+        og.appendChild(opt);
+      });
+      select.appendChild(og);
+    });
+  });
+
+  document.getElementById('regForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('formMsg').classList.add('show');
+  });
+</script>
+</body>
+</html>

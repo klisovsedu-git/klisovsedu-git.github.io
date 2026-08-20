@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cisco Networking Academy — ІТС КПІ</title>
+<meta name="description" content="Акредитована Cisco Networking Academy при Інституті телекомунікаційних систем КПІ ім. Ігоря Сікорського. Курси CCNA, кібербезпека, інструктори, реєстрація.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2711%27 fill=%27%2300BCEB%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* ---------- hero ---------- */
+  .hero{ padding: 76px 0 60px; position:relative; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items:center; }
+  .hero h1{
+    font-size: clamp(34px, 5vw, 56px); line-height:1.06; margin-top:16px;
+  }
+  .hero h1 em{ font-style:normal; color: var(--cisco); }
+  .hero p.lead{ color: var(--text-dim); font-size: 17px; margin-top: 20px; max-width: 520px; }
+  .hero-cta{ display:flex; gap:14px; margin-top: 32px; flex-wrap:wrap; }
+
+  .hero-stats{ display:flex; gap: 26px; margin-top: 44px; flex-wrap:wrap; }
+  .stat b{ display:block; font-family: var(--font-display); font-size: 26px; }
+  .stat span{ display:block; font-size: 12px; color: var(--text-faint); font-family: var(--font-mono); margin-top:2px; }
+
+  .hero-panel{
+    position:relative; border-radius: var(--radius-lg);
+    background: linear-gradient(160deg, var(--bg-panel-2), var(--bg-panel));
+    border: 1px solid var(--line); padding: 26px;
+    font-family: var(--font-mono); font-size: 13px;
+  }
+  .hero-panel .bar{ display:flex; gap:6px; margin-bottom:18px; }
+  .hero-panel .bar span{ width:9px; height:9px; border-radius:50%; background: var(--line-strong); }
+  .term-line{ color: var(--text-dim); margin: 6px 0; }
+  .term-line .ok{ color: var(--ok); }
+  .term-line .path{ color: var(--cisco); }
+  .term-cursor{ display:inline-block; width:7px; height:14px; background: var(--cisco); vertical-align:middle; animation: blink 1s steps(2) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns: .9fr 1.1fr; gap: 54px; align-items:start; }
+  .about-card{
+    background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 28px; margin-bottom: 16px;
+  }
+  .about-card h4{ font-size:15px; margin-bottom:8px; color: var(--cisco); }
+  .about-card p{ color: var(--text-dim); font-size: 14.5px; margin:0; }
+  .about-copy p{ color: var(--text-dim); margin-bottom: 16px; }
+  .about-copy strong{ color: var(--text); }
+
+  /* ---------- courses preview ---------- */
+  .course-preview-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .cp-card{
+    background: var(--bg-panel); border: 1px solid var(--line); border-radius: var(--radius-md);
+    padding: 26px; transition: transform .22s ease, border-color .22s ease;
+  }
+  .cp-card:hover{ transform: translateY(-4px); border-color: var(--cisco); }
+  .cp-card .idx{ font-family: var(--font-mono); font-size:12px; color: var(--text-faint); }
+  .cp-card h4{ font-size: 18px; margin: 10px 0 8px; }
+  .cp-card p{ color: var(--text-dim); font-size: 14px; margin:0 0 18px; }
+  .cp-card a{ font-family: var(--font-mono); font-size:13px; color: var(--cisco); }
+  .cp-card a:hover{ text-decoration: underline; }
+  .catalog-cta{
+    margin-top: 40px; display:flex; align-items:center; justify-content:space-between;
+    background: linear-gradient(120deg, var(--bg-raised), var(--bg-panel));
+    border:1px solid var(--line-strong); border-radius: var(--radius-lg);
+    padding: 26px 30px; flex-wrap:wrap; gap:18px;
+  }
+  .catalog-cta h3{ font-size: 21px; }
+  .catalog-cta p{ color: var(--text-dim); margin: 6px 0 0; font-size:14px; }
+
+  /* ---------- instructors ---------- */
+  .team-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .team-card{
+    background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-md);
+    overflow:hidden; transition: transform .22s ease, border-color .22s ease;
+  }
+  .team-card:hover{ transform: translateY(-4px); border-color: var(--cisco); }
+  .team-photo{ aspect-ratio: 1/1; background: var(--bg-raised); overflow:hidden; }
+  .team-photo img{ width:100%; height:100%; object-fit:cover; }
+  .team-body{ padding: 16px 18px 20px; }
+  .team-body h4{ font-size:15.5px; margin-bottom:5px; }
+  .team-role{ font-size:12.5px; color: var(--cisco); font-family: var(--font-mono); margin-bottom:6px; }
+  .team-dept{ font-size: 13px; color: var(--text-dim); margin-bottom:10px; }
+  .team-body a{ font-size:12.5px; color: var(--text-faint); }
+  .team-body a:hover{ color: var(--cisco); }
+
+  /* ---------- privacy ---------- */
+  .privacy-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:20px; }
+  .priv-card{ background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-md); padding: 22px; }
+  .priv-card h4{ font-size:14.5px; margin-bottom:8px; }
+  .priv-card p{ font-size: 13.5px; color: var(--text-dim); margin:0; }
+
+  @media (max-width: 980px){
+    .hero-grid, .about-grid{ grid-template-columns: 1fr; }
+    .course-preview-grid{ grid-template-columns: 1fr 1fr; }
+    .team-grid{ grid-template-columns: 1fr 1fr; }
+    .privacy-grid{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px){
+    .course-preview-grid{ grid-template-columns: 1fr; }
+    .team-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="back-btn" href="index.html" title="Усі академії">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Усі академії</span>
+    </a>
+    <a class="brand" href="cisco.html">
+      <span class="node"><svg viewBox="0 0 24 24" fill="none"><circle cx="4" cy="18" r="2" fill="white"/><circle cx="9" cy="18" r="2" fill="white"/><circle cx="14" cy="18" r="2" fill="white"/><circle cx="19" cy="18" r="2" fill="white"/><circle cx="6.5" cy="11" r="2" fill="white"/><circle cx="11.5" cy="11" r="2" fill="white"/><circle cx="16.5" cy="11" r="2" fill="white"/><circle cx="9" cy="4" r="2" fill="white"/><circle cx="14" cy="4" r="2" fill="white"/></svg></span>
+      <span>CISCO ACADEMY<small>ІТС КПІ ім. Ігоря Сікорського</small></span>
+    </a>
+    <div class="navlinks">
+      <a href="#about">Про нас</a>
+      <a href="#courses">Курси</a>
+      <a href="#instructors">Інструктори</a>
+      <a href="#privacy">Конфіденційність</a>
+      <a href="register.html" class="cta">Реєстрація →</a>
+    </div>
+    <button class="navtoggle" aria-label="Меню"><span></span></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> АКРЕДИТОВАНА CISCO NETWORKING ACADEMY</div>
+      <h1>Мережеві навички,<br>що ведуть до <em>CCNA</em>.</h1>
+      <p class="lead">Готуємо студентів ІТС та всіх охочих до кар'єри в мережевих технологіях і кібербезпеці — від перших пакетів до сертифікації Cisco Certified Network Associate.</p>
+      <div class="hero-cta">
+        <a href="catalog.html" class="btn btn-cisco">Переглянути каталог курсів</a>
+        <a href="register.html" class="btn btn-ghost">Зареєструватись на курс</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>82+</b><span>КУРСИ NETACAD</span></div>
+        <div class="stat"><b>7</b><span>НАПРЯМІВ ПІДГОТОВКИ</span></div>
+        <div class="stat"><b>4</b><span>ІНСТРУКТОРИ</span></div>
+      </div>
+    </div>
+    <div class="hero-panel" data-reveal>
+      <div class="bar"><span></span><span></span><span></span></div>
+      <div class="term-line">$ academy --status</div>
+      <div class="term-line"><span class="ok">✓</span> Cisco Networking Academy: <span class="path">acredited</span></div>
+      <div class="term-line"><span class="ok">✓</span> host: <span class="path">its.kpi.ua</span></div>
+      <div class="term-line"><span class="ok">✓</span> track: CCNA · CyberOps · Packet Tracer</div>
+      <div class="term-line">$ enroll --course "CCNA Security"</div>
+      <div class="term-line"><span class="ok">✓</span> заявку прийнято, очікуйте на лист<span class="term-cursor"></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap"><div class="divider-trace"></div></div>
+
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="about-card">
+        <h4>Хто ми</h4>
+        <p>Акредитована Cisco Networking Academy при Навчально-науковому інституті телекомунікаційних систем КПІ ім. Ігоря Сікорського.</p>
+      </div>
+      <div class="about-card">
+        <h4>Наша мета</h4>
+        <p>Надати студентам ІТС та всім охочим здобувачам освіти сучасні знання в галузі інформаційних технологій і кібербезпеки.</p>
+      </div>
+    </div>
+    <div class="about-copy">
+      <div class="eyebrow">ПРО АКАДЕМІЮ</div>
+      <h2 style="margin-top:12px; font-size: clamp(26px,3.4vw,36px);">Всесвітня програма, локальний вимір</h2>
+      <p><strong>Cisco Academy</strong> — глобальна освітня програма, яка готує студентів до професій у сфері ІТ. Вона дозволяє здобути сертифікацію <strong>CCNA (Cisco Certified Network Associate)</strong>, що відкриває шлях до кар'єри в телекомунікаціях і кібербезпеці.</p>
+      <p>Ми раді бачити кожного, хто прагне до розвитку, нових знань та технологічного майбутнього разом із нами — від першокурсника, який щойно дізнався, що таке IP-адреса, до інженера, що готується до CCNA.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight" id="courses">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">АКТУАЛЬНІ КУРСИ</div>
+      <h2>З чого почати маршрут</h2>
+      <p>Три найпопулярніші напрями серед студентів академії цього семестру.</p>
+    </div>
+    <div class="course-preview-grid">
+      <div class="cp-card" data-reveal>
+        <div class="idx">01 / MEREZHI</div>
+        <h4>CCNA Routing &amp; Switching</h4>
+        <p>Основи комп'ютерних мереж, маршрутизації та комутації.</p>
+        <a href="https://www.netacad.com/courses/ccna-switching-routing-wireless-essentials?courseLang=en-US" target="_blank" rel="noopener">Відкрити курс на NetAcad →</a>
+      </div>
+      <div class="cp-card" data-reveal>
+        <div class="idx">02 / SECURITY</div>
+        <h4>CCNA Security</h4>
+        <p>Захист мереж, політики безпеки, конфігурація фахівців.</p>
+        <a href="https://www.netacad.com/courses/ccna-enterprise-networking-security-automation?courseLang=en-US" target="_blank" rel="noopener">Відкрити курс на NetAcad →</a>
+      </div>
+      <div class="cp-card" data-reveal>
+        <div class="idx">03 / CYBEROPS</div>
+        <h4>CCNA Cyber Ops</h4>
+        <p>Кібероперації, виявлення атак та реагування на інциденти.</p>
+        <a href="https://www.netacad.com/courses/cyberops-associate?courseLang=en-US" target="_blank" rel="noopener">Відкрити курс на NetAcad →</a>
+      </div>
+    </div>
+
+    <div class="catalog-cta" data-reveal>
+      <div>
+        <h3>Повний каталог — 82 курси, 7 категорій</h3>
+        <p>Мережі, кібербезпека, програмування, ШІ, ОС, бізнес та англійська для ІТ.</p>
+      </div>
+      <a href="catalog.html" class="btn btn-cisco">Відкрити каталог курсів →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="instructors">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">КОМАНДА АКАДЕМІЇ</div>
+      <h2>Інструктори</h2>
+      <p>Викладачі кафедри Інформаційних технологій у телекомунікаціях та Факультету лінгвістики.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card" data-reveal>
+        <div class="team-photo"><img src="https://academy.its.kpi.ua/wp-content/uploads/2025/11/a-2.jpg" alt="Астраханцев Андрій Анатолійович" loading="lazy"></div>
+        <div class="team-body">
+          <h4>Астраханцев А. А.</h4>
+          <div class="team-role">Керівник академії</div>
+          <div class="team-dept">Доцент кафедри ІТТ, НН ІТС</div>
+          <a href="https://intellect.kpi.ua/profile/aaa48" target="_blank" rel="noopener">Профіль «Інтелект КПІ» →</a>
+        </div>
+      </div>
+      <div class="team-card" data-reveal>
+        <div class="team-photo"><img src="https://academy.its.kpi.ua/wp-content/uploads/2025/11/photo_2025-11-12_00-01-35.jpg" alt="Лісовський Костянтин Сергійович" loading="lazy"></div>
+        <div class="team-body">
+          <h4>Лісовський К. С.</h4>
+          <div class="team-role">Інструктор академії</div>
+          <div class="team-dept">Асистент кафедри ІТТ, НН ІТС</div>
+          <a href="https://intellect.kpi.ua/profile/lks37" target="_blank" rel="noopener">Профіль «Інтелект КПІ» →</a>
+        </div>
+      </div>
+      <div class="team-card" data-reveal>
+        <div class="team-photo"><img src="https://academy.its.kpi.ua/wp-content/uploads/2025/11/photo_2025-11-12_22-15-16.jpg" alt="Недашківський Олексій Леонідович" loading="lazy"></div>
+        <div class="team-body">
+          <h4>Недашківський О. Л.</h4>
+          <div class="team-role">Інструктор академії</div>
+          <div class="team-dept">Професор кафедри ІТТ, НН ІТС</div>
+          <a href="https://itt-its.kpi.ua/employees-of-department/?elementor_library=nedashkivskyi" target="_blank" rel="noopener">Профіль «Інтелект КПІ» →</a>
+        </div>
+      </div>
+      <div class="team-card" data-reveal>
+        <div class="team-photo"><img src="https://academy.its.kpi.ua/wp-content/uploads/2025/11/photo_2025-11-12_22-24-33.jpg" alt="Назаренко Ольга Іванівна" loading="lazy"></div>
+        <div class="team-body">
+          <h4>Назаренко О. І.</h4>
+          <div class="team-role">Інструктор курсів English for IT</div>
+          <div class="team-dept">Каф. англ. мови техн. спрямування №2</div>
+          <a href="https://intellect.kpi.ua/profile/noi15" target="_blank" rel="noopener">Профіль «Інтелект КПІ» →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight" id="privacy">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">ПОЛІТИКА КОНФІДЕНЦІЙНОСТІ</div>
+      <h2>Як ми поводимось з даними</h2>
+    </div>
+    <div class="privacy-grid">
+      <div class="priv-card"><h4>Хто ми</h4><p>Акредитована Cisco Networking Academy при Інституті телекомунікаційних систем, що спеціалізується на навчанні мережевим технологіям і кібербезпеці.</p></div>
+      <div class="priv-card"><h4>Дані реєстрації</h4><p>Дані форми реєстрації використовуються лише для зв'язку щодо запису на курс і не передаються третім особам без потреби.</p></div>
+      <div class="priv-card"><h4>Файли cookie</h4><p>Технічні cookie можуть використовуватись для зручності повторного заповнення форм і не використовуються для реклами.</p></div>
+      <div class="priv-card"><h4>Вбудований вміст</h4><p>Сторінки можуть містити посилання на зовнішні ресурси (NetAcad, КПІ), які мають власні політики конфіденційності.</p></div>
+      <div class="priv-card"><h4>Термін зберігання</h4><p>Дані заявок зберігаються протягом часу, необхідного для організації навчального процесу.</p></div>
+      <div class="priv-card"><h4>Ваші права</h4><p>Ви можете запитати видалення або копію наданих нам персональних даних, звернувшись до координаторів академії.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="wrap">
+    <div class="catalog-cta" data-reveal>
+      <div>
+        <h3>Готові розпочати навчання?</h3>
+        <p>Заповніть коротку форму реєстрації — і ми зв'яжемось щодо старту курсу.</p>
+      </div>
+      <a href="register.html" class="btn btn-cisco">Зареєструватись на курс →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="fmeta">© 2026 Cisco Networking Academy · НН ІТС КПІ ім. Ігоря Сікорського</div>
+    <div class="flinks">
+      <a href="index.html">← Усі академії</a>
+      <a href="catalog.html">Каталог курсів</a>
+      <a href="register.html">Реєстрація</a>
+      <a href="https://its.kpi.ua" target="_blank" rel="noopener">its.kpi.ua</a>
+      <a href="#privacy">Конфіденційність</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
