@@ -122,6 +122,44 @@
   .join-cta h3{ font-size: clamp(20px,2.6vw,26px); margin-bottom:10px; }
   .join-cta p{ color: var(--text-dim); font-size:14.5px; max-width:520px; margin:0 auto 22px; }
 
+  /* ---------- contact card ---------- */
+  .contact-card{
+    margin-top: 30px;
+    display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+    background: var(--bg-panel); border:1px solid var(--line-strong); border-radius: var(--radius-lg);
+    padding: 24px 28px;
+  }
+  .contact-avatar{
+    width:56px; height:56px; border-radius:14px; flex:none;
+    background: linear-gradient(135deg, var(--huawei), var(--huawei-dim));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 22px var(--huawei-glow);
+  }
+  .contact-avatar svg{ width:26px; height:26px; color:#fff; }
+  .contact-body{ flex:1; min-width:220px; }
+  .contact-body .ct-label{
+    font-family: var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color: var(--text-faint); margin-bottom:6px;
+  }
+  .contact-body h4{ font-size:16.5px; margin-bottom:4px; }
+  .contact-body p{ color: var(--text-dim); font-size:13.5px; margin:0; }
+  .contact-links{ display:flex; gap:10px; flex-wrap:wrap; flex:none; }
+  .contact-links a{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family: var(--font-mono); font-size:12.5px;
+    padding: 10px 16px; border-radius:999px;
+    border:1px solid var(--line-strong); color: var(--text);
+    transition: all .2s ease;
+  }
+  .contact-links a svg{ width:15px; height:15px; flex:none; }
+  .contact-links a:hover{ border-color: var(--huawei); color: var(--huawei); }
+
+  @media (max-width: 560px){
+    .contact-card{ padding:22px; }
+    .contact-links{ width:100%; }
+    .contact-links a{ flex:1; justify-content:center; }
+  }
+
   @media (max-width: 980px){
     .hero-grid, .about-grid{ grid-template-columns: 1fr; }
     .perks-grid{ grid-template-columns: 1fr 1fr; }
@@ -346,6 +384,27 @@
           <h4>Отримай ваучер на HCIA</h4>
           <p>За високого рівня підготовки координатор академії видає безкоштовний ваучер на офіційний міжнародний іспит HCIA.</p>
         </div>
+      </div>
+    </div>
+
+    <div class="contact-card" data-reveal>
+      <div class="contact-avatar">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="white" stroke-width="1.7"/><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="white" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </div>
+      <div class="contact-body">
+        <div class="ct-label">Питання щодо реєстрації</div>
+        <h4>Астраханцев Андрій Анатолійович</h4>
+        <p>Інструктор академії — звертайся напряму з питань реєстрації та приєднання до курсів.</p>
+      </div>
+      <div class="contact-links">
+        <a href="https://t.me/AstrakhantsevAndrii" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M21 4L2.5 11.5l6 2m12.5-9.5L14.5 20l-6-6.5m12.5-9.5L8.5 13.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Telegram
+        </a>
+        <a href="mailto:andrii.astrakhantsev@nure.ua">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          andrii.astrakhantsev@nure.ua
+        </a>
       </div>
     </div>
 
