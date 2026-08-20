@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хроніки Уламків</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Панель персонажа -->
+        <aside class="character-panel">
+            <h2 id="char-name">Завантаження...</h2>
+            <div class="stats">
+                <p>❤️ Здоров'я: <span id="char-hp"></span></p>
+                <p>✨ Натхнення: <span id="char-insp"></span></p>
+            </div>
+            
+            <h3>Риси (Теги)</h3>
+            <div id="char-tags" class="tags-container"></div>
+            
+            <h3>Інвентар</h3>
+            <ul id="char-inventory" class="inventory-list"></ul>
+        </aside>
+
+        <!-- Ігрове вікно -->
+        <main class="game-panel">
+            <div id="chat-history" class="chat-history">
+                <!-- Повідомлення генеруються через JS -->
+            </div>
+            
+            <form id="action-form" class="action-form">
+                <input type="text" id="action-input" placeholder="Опишіть свою дію..." autocomplete="off" required>
+                <button type="submit" id="send-btn">Діяти</button>
+            </form>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
