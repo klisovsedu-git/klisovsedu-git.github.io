@@ -1,0 +1,270 @@
+/* =========================================================
+   ITS NETWORK ACADEMIES — shared design system
+   Concept: "мережева карта" (network topology / NOC console)
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:            #0A0F1C;
+  --bg-panel:      #101830;
+  --bg-panel-2:    #141F3D;
+  --bg-raised:     #182548;
+  --line:          rgba(255,255,255,0.09);
+  --line-strong:   rgba(255,255,255,0.16);
+  --text:          #EAF0FA;
+  --text-dim:      #8B99B8;
+  --text-faint:    #5A688A;
+
+  --cisco:         #00BCEB;
+  --cisco-dim:     #0B8AB0;
+  --cisco-glow:    rgba(0,188,235,0.35);
+
+  --huawei:        #E2001A;
+  --huawei-dim:    #A5000F;
+  --huawei-glow:   rgba(226,0,26,0.35);
+
+  --ok:            #2FE0A8;
+  --warn:          #F2B705;
+  --danger:        #FF5D6C;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+
+html, body{ max-width: 100%; overflow-x: hidden; }
+body{
+  margin:0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ambient circuit-grid backdrop */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: .35;
+  mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 70%);
+}
+
+a{ color: inherit; text-decoration: none; }
+img{ max-width:100%; display:block; }
+
+h1,h2,h3,h4{ font-family: var(--font-display); margin: 0; letter-spacing: -0.01em; }
+
+.mono{ font-family: var(--font-mono); }
+
+.wrap{
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 480px){
+  .wrap{ padding: 0 18px; }
+}
+
+/* ---------- focus / accessibility ---------- */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+  outline: 2px solid var(--cisco);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- eyebrow / status pill ---------- */
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.eyebrow .dot{
+  width:7px; height:7px; border-radius:50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px rgba(47,224,168,.18);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+@keyframes pulse-dot{
+  0%,100%{ box-shadow: 0 0 0 3px rgba(47,224,168,.18); }
+  50%{ box-shadow: 0 0 0 6px rgba(47,224,168,.06); }
+}
+
+/* ---------- top nav (used on cisco.html / catalog.html) ---------- */
+.topnav{
+  position: sticky; top:0; z-index: 50;
+  background: rgba(10,15,28,0.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topnav-inner{
+  display:flex; align-items:center; gap: 14px;
+  max-width: 1180px; margin: 0 auto; padding: 16px 28px;
+}
+.topnav-inner .navlinks{ margin-left: auto; }
+
+/* --- back-to-academies button --- */
+.back-btn{
+  display:flex; align-items:center; gap:7px; flex: none;
+  width: 38px; height:38px; border-radius: 10px;
+  border: 1px solid var(--line-strong); background: var(--bg-panel);
+  color: var(--text-dim); overflow:hidden;
+  transition: all .2s ease;
+}
+.back-btn svg{ width:16px; height:16px; flex:none; margin-left: 10px; }
+.back-btn span{
+  font-family: var(--font-mono); font-size: 12.5px; white-space:nowrap;
+  opacity:0; max-width:0; transition: all .2s ease;
+}
+.back-btn:hover{ width: auto; padding-right: 14px; border-color: var(--cisco); color: var(--text); }
+.back-btn:hover span{ opacity:1; max-width:160px; margin-left: 2px; }
+
+.brand{
+  display:flex; align-items:center; gap:10px; min-width:0;
+  font-family: var(--font-display); font-weight:700; font-size: 17px;
+}
+.brand span{ min-width:0; overflow:hidden; text-overflow:ellipsis; }
+.brand .node{
+  width: 26px; height:26px; border-radius:7px;
+  background: linear-gradient(135deg, var(--cisco), var(--cisco-dim));
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 0 16px var(--cisco-glow);
+  flex: none;
+}
+.brand .node svg{ width:15px; height:15px; }
+.brand small{ display:block; font-family: var(--font-mono); font-weight:400; font-size:11px; color:var(--text-dim); letter-spacing:.04em; }
+
+.navlinks{ display:flex; align-items:center; gap: 28px; }
+.navlinks a{
+  font-size: 14px; color: var(--text-dim); font-weight:500;
+  position:relative; padding: 4px 0;
+  transition: color .2s ease;
+}
+.navlinks a:hover{ color: var(--text); }
+.navlinks a::after{
+  content:""; position:absolute; left:0; right:100%; bottom:-2px; height:2px;
+  background: var(--cisco); transition: right .25s ease;
+}
+.navlinks a:hover::after{ right:0; }
+.navlinks a.cta{
+  color: var(--bg); background: var(--cisco); padding: 9px 16px; border-radius: 999px;
+  font-family: var(--font-mono); font-size: 13px; font-weight:600;
+}
+.navlinks a.cta:hover{ background: #21cbfa; }
+.navlinks a.cta::after{ display:none; }
+
+.navtoggle{
+  display:none; width:38px; height:38px; border-radius:8px;
+  border:1px solid var(--line-strong); background: var(--bg-panel);
+  align-items:center; justify-content:center; cursor:pointer;
+}
+.navtoggle span, .navtoggle span::before, .navtoggle span::after{
+  content:""; display:block; width:16px; height:2px; background: var(--text);
+  position:relative; transition: all .2s ease;
+}
+.navtoggle span::before{ position:absolute; top:-6px; }
+.navtoggle span::after{ position:absolute; top:6px; }
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family: var(--font-mono); font-size: 14px; font-weight:600;
+  padding: 13px 24px; border-radius: 999px; cursor:pointer;
+  border: 1px solid transparent; transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.btn:active{ transform: translateY(1px); }
+.btn-cisco{ background: var(--cisco); color:#04121C; }
+.btn-cisco:hover{ box-shadow: 0 8px 24px var(--cisco-glow); transform: translateY(-2px); }
+.btn-ghost{ background: transparent; border-color: var(--line-strong); color: var(--text); }
+.btn-ghost:hover{ border-color: var(--cisco); color: var(--cisco); }
+
+/* ---------- footer ---------- */
+.site-footer{
+  border-top: 1px solid var(--line);
+  padding: 40px 0 28px;
+  margin-top: 90px;
+}
+.site-footer .wrap{
+  display:flex; flex-wrap:wrap; gap: 18px;
+  align-items:center; justify-content:space-between;
+}
+.site-footer .fmeta{ color: var(--text-faint); font-size: 13px; font-family: var(--font-mono); }
+.site-footer .flinks{ display:flex; gap:22px; flex-wrap:wrap; }
+.site-footer .flinks a{ font-size: 13px; color: var(--text-dim); }
+.site-footer .flinks a:hover{ color: var(--cisco); }
+
+/* ---------- section shells ---------- */
+.section{ padding: 90px 0; position:relative; }
+.section-head{ max-width: 640px; margin-bottom: 44px; }
+.section-head h2{ font-size: clamp(28px,3.6vw,40px); margin-top:12px; }
+.section-head p{ color: var(--text-dim); margin-top: 14px; font-size: 16px; }
+.section-tight{ padding: 50px 0; }
+
+.divider-trace{
+  height: 1px; width:100%;
+  background: repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 14px);
+}
+
+/* ---------- reveal-on-scroll ---------- */
+[data-reveal]{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+[data-reveal].is-visible{ opacity:1; transform: none; }
+
+@media (prefers-reduced-motion: reduce){
+  [data-reveal]{ opacity:1; transform:none; transition:none; }
+  *{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
+/* ---------- registration form (shared: cisco preview blocks + register.html) ---------- */
+.field, .field *{ min-width: 0; }
+.field input, .field select, .field textarea{
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 880px){
+  .navlinks{
+    position: fixed; inset: 66px 16px auto 16px;
+    background: var(--bg-panel); border:1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    flex-direction:column; align-items: flex-start; gap: 4px;
+    padding: 10px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.5);
+    transform-origin: top right;
+    transform: scale(.96); opacity:0; visibility:hidden;
+    transition: all .18s ease;
+  }
+  .navlinks.open{ transform:scale(1); opacity:1; visibility:visible; }
+  .navlinks a{ width:100%; padding: 12px 10px; border-radius: 8px; }
+  .navlinks a:hover{ background: var(--bg-raised); }
+  .navlinks a::after{ display:none; }
+  .navlinks a.cta{ text-align:center; margin-top: 4px; }
+  .navtoggle{ display:flex; margin-left:auto; }
+  .topnav-inner .navlinks{ margin-left:0; }
+}
