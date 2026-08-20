@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Academy — ІТС КПІ</title>
+<meta name="description" content="AWS Academy при Інституті телекомунікаційних систем КПІ ім. Ігоря Сікорського. Безкоштовна навчальна програма з хмарних технологій AWS: Cloud Foundations, Cloud Architecting, Machine Learning, Data Engineering та інші курси.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2711%27 fill=%27%23FF9900%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  :root{
+    --aws: #FF9900;
+    --aws-dim: #EC7211;
+    --aws-glow: rgba(255,153,0,0.32);
+  }
+  .topnav .brand .node{ background: linear-gradient(135deg, var(--aws), var(--aws-dim)); box-shadow: 0 0 16px var(--aws-glow); }
+  .navlinks a::after{ background: var(--aws); }
+  .navlinks a.cta{ background: var(--aws); color:#241a00; }
+  .navlinks a.cta:hover{ background:#ffb03a; }
+  .btn-aws{ background: var(--aws); color:#241a00; }
+  .btn-aws:hover{ box-shadow: 0 8px 24px var(--aws-glow); transform: translateY(-2px); }
+  .btn-ghost:hover{ border-color: var(--aws); color: var(--aws); }
+  a:focus-visible, button:focus-visible{ outline-color: var(--aws); }
+
+  /* ---------- hero ---------- */
+  .hero{ padding: 76px 0 60px; position:relative; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items:center; }
+  .hero h1{ font-size: clamp(34px, 5vw, 56px); line-height:1.06; margin-top:16px; }
+  .hero h1 em{ font-style:normal; color: var(--aws); }
+  .hero p.lead{ color: var(--text-dim); font-size: 17px; margin-top: 20px; max-width: 540px; }
+  .hero-cta{ display:flex; gap:14px; margin-top: 32px; flex-wrap:wrap; }
+
+  .hero-stats{ display:flex; gap: 26px; margin-top: 44px; flex-wrap:wrap; }
+  .stat b{ display:block; font-family: var(--font-display); font-size: 26px; }
+  .stat span{ display:block; font-size: 12px; color: var(--text-faint); font-family: var(--font-mono); margin-top:2px; }
+
+  .hero-panel{
+    position:relative; border-radius: var(--radius-lg);
+    background: linear-gradient(160deg, var(--bg-panel-2), var(--bg-panel));
+    border: 1px solid var(--line); padding: 26px;
+    font-family: var(--font-mono); font-size: 13px;
+  }
+  .hero-panel .bar{ display:flex; gap:6px; margin-bottom:18px; }
+  .hero-panel .bar span{ width:9px; height:9px; border-radius:50%; background: var(--line-strong); }
+  .term-line{ color: var(--text-dim); margin: 6px 0; }
+  .term-line .ok{ color: var(--ok); }
+  .term-line .path{ color: var(--aws); }
+  .term-cursor{ display:inline-block; width:7px; height:14px; background: var(--aws); vertical-align:middle; animation: blink 1s steps(2) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns: .9fr 1.1fr; gap: 54px; align-items:start; }
+  .about-card{ background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 16px; }
+  .about-card h4{ font-size:15px; margin-bottom:8px; color: var(--aws); }
+  .about-card p{ color: var(--text-dim); font-size: 14.5px; margin:0; }
+  .about-copy p{ color: var(--text-dim); margin-bottom: 16px; }
+  .about-copy strong{ color: var(--text); }
+
+  /* ---------- perks (tabs: students / educators / institutions) ---------- */
+  .perk-tabs{ display:flex; gap:10px; margin-bottom:28px; flex-wrap:wrap; }
+  .perk-tab{
+    font-family: var(--font-mono); font-size:12.5px; padding:9px 16px; border-radius:999px;
+    background: var(--bg-panel); border:1px solid var(--line-strong); color: var(--text-dim);
+    cursor:pointer; transition: all .18s ease;
+  }
+  .perk-tab.active{ background: var(--aws); border-color: var(--aws); color:#241a00; font-weight:600; }
+  .perks-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+  .perk-card{
+    background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-md);
+    padding: 22px; transition: transform .2s ease, border-color .2s ease;
+  }
+  .perk-card:hover{ transform: translateY(-4px); border-color: var(--aws); }
+  .perk-icon{
+    width:36px; height:36px; border-radius:10px; margin-bottom:14px;
+    background: rgba(255,153,0,0.12); border:1px solid rgba(255,153,0,0.35);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .perk-icon svg{ width:18px; height:18px; color: var(--aws); }
+  .perk-card p{ color: var(--text-dim); font-size:13.5px; margin:0; line-height:1.5; }
+
+  /* ---------- courses ---------- */
+  .course-tabs{ display:flex; gap:10px; margin: 0 0 26px; flex-wrap:wrap; }
+  .ctab{
+    font-family: var(--font-mono); font-size:12.5px; padding:9px 16px; border-radius:999px;
+    background: var(--bg-panel); border:1px solid var(--line-strong); color: var(--text-dim); cursor:pointer;
+  }
+  .ctab.active{ background: var(--aws); border-color: var(--aws); color:#241a00; font-weight:600; }
+  .course-group{ display:none; }
+  .course-group.active{ display:block; }
+  .course-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .course-card{
+    background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-md);
+    padding: 24px; display:flex; flex-direction:column; height:100%;
+    transition: transform .22s ease, border-color .22s ease;
+  }
+  .course-card:hover{ transform: translateY(-4px); border-color: var(--aws); }
+  .course-tag{
+    align-self:flex-start; font-family: var(--font-mono); font-size:10.5px; letter-spacing:.04em;
+    padding:4px 9px; border-radius:999px; border:1px solid rgba(255,153,0,0.35); color: var(--aws);
+    background: rgba(255,153,0,0.08); margin-bottom:14px; text-transform:uppercase;
+  }
+  .course-card h4{ font-size:16px; margin-bottom:8px; }
+  .course-card p{ color: var(--text-dim); font-size:13.3px; margin:0; flex:1; }
+  .course-hours{ margin-top:14px; font-family: var(--font-mono); font-size:11.5px; color: var(--text-faint); }
+
+  .catalog-cta{
+    margin-top: 30px; display:flex; align-items:center; justify-content:space-between;
+    background: linear-gradient(120deg, var(--bg-raised), var(--bg-panel));
+    border:1px solid var(--line-strong); border-radius: var(--radius-lg);
+    padding: 24px 28px; flex-wrap:wrap; gap:16px;
+  }
+  .catalog-cta h3{ font-size:19px; }
+  .catalog-cta p{ color: var(--text-dim); margin:6px 0 0; font-size:13.5px; }
+
+  /* ---------- join steps ---------- */
+  .steps-list{ display:flex; flex-direction:column; gap:0; }
+  .step-item{
+    position:relative; display:grid; grid-template-columns: 52px 1fr; gap:20px;
+    padding: 22px 0; border-bottom: 1px solid var(--line);
+  }
+  .step-item:last-child{ border-bottom:none; }
+  .step-num{
+    width:40px; height:40px; border-radius:12px;
+    background: var(--bg-panel); border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-display); font-weight:700; font-size:16px; color: var(--aws);
+  }
+  .step-body h4{ font-size:16px; margin-bottom:6px; }
+  .step-body p{ color: var(--text-dim); font-size:14px; margin:0 0 8px; }
+  .step-body ul{ margin:8px 0 0; padding-left:18px; color: var(--text-dim); font-size:13.5px; }
+  .step-body li{ margin-bottom:4px; }
+  .step-body a{ color: var(--aws); }
+  .step-body a:hover{ text-decoration:underline; }
+
+  .join-cta{
+    margin-top:34px; text-align:center;
+    background: linear-gradient(160deg, rgba(255,153,0,0.1), var(--bg-panel));
+    border:1px solid rgba(255,153,0,0.3); border-radius: var(--radius-lg);
+    padding: 34px 24px;
+  }
+  .join-cta h3{ font-size: clamp(20px,2.6vw,26px); margin-bottom:10px; }
+  .join-cta p{ color: var(--text-dim); font-size:14.5px; max-width:540px; margin:0 auto 22px; }
+  .join-cta-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  @media (max-width: 980px){
+    .hero-grid, .about-grid{ grid-template-columns: 1fr; }
+    .perks-grid{ grid-template-columns: 1fr 1fr; }
+    .course-grid{ grid-template-columns: 1fr 1fr; }
+    .step-item{ grid-template-columns: 40px 1fr; }
+  }
+  @media (max-width: 560px){
+    .perks-grid{ grid-template-columns: 1fr; }
+    .course-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="back-btn" href="index.html" title="Усі академії">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Усі академії</span>
+    </a>
+    <a class="brand" href="aws.html">
+      <span class="node"><svg viewBox="0 0 24 24" fill="none"><path d="M6 17a4 4 0 01.5-7.97A5.5 5.5 0 0117 10.5a3.5 3.5 0 01-1 6.5H6z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+      <span>AWS ACADEMY<small>ІТС КПІ ім. Ігоря Сікорського</small></span>
+    </a>
+    <div class="navlinks">
+      <a href="#about">Про нас</a>
+      <a href="#courses">Курси</a>
+      <a href="#perks">Переваги</a>
+      <a href="#join">Як приєднатися</a>
+      <a href="#join" class="cta">Приєднатися →</a>
+    </div>
+    <button class="navtoggle" aria-label="Меню"><span></span></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot" style="background:var(--aws)"></span> ПАРТНЕРСЬКА AWS ACADEMY</div>
+      <h1>Хмарні навички,<br>що ведуть до <em>AWS</em>.</h1>
+      <p class="lead">AWS Academy — безкоштовна, готова до викладання навчальна програма з хмарних обчислень для закладів вищої освіти. Готуємо студентів ІТС до індустріальних сертифікацій AWS та кар'єри в одній з найбільш затребуваних галузей.</p>
+      <div class="hero-cta">
+        <a href="#courses" class="btn btn-aws">Переглянути курси</a>
+        <a href="#join" class="btn btn-ghost">Як приєднатися</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>11</b><span>КУРСІВ AWS</span></div>
+        <div class="stat"><b>100%</b><span>ЗНИЖКА НА ІСПИТ*</span></div>
+        <div class="stat"><b>12 міс</b><span>AWS SKILL BUILDER</span></div>
+      </div>
+    </div>
+    <div class="hero-panel" data-reveal>
+      <div class="bar"><span></span><span></span><span></span></div>
+      <div class="term-line">$ academy --status</div>
+      <div class="term-line"><span class="ok">✓</span> AWS Academy: <span class="path">member institution</span></div>
+      <div class="term-line"><span class="ok">✓</span> host: <span class="path">its.kpi.ua</span></div>
+      <div class="term-line"><span class="ok">✓</span> track: Cloud Foundations · Architecting · ML · Data Engineering</div>
+      <div class="term-line">$ enroll --course "Cloud Architecting"</div>
+      <div class="term-line"><span class="ok">✓</span> доступ відкрито через AWS Academy Learner Lab<span class="term-cursor"></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap"><div class="divider-trace"></div></div>
+
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="about-card">
+        <h4>Хто ми</h4>
+        <p>Партнерська AWS Academy при Навчально-науковому інституті телекомунікаційних систем КПІ ім. Ігоря Сікорського.</p>
+      </div>
+      <div class="about-card">
+        <h4>Наша мета</h4>
+        <p>Долати розрив між індустрією та академією — готувати студентів до затребуваних хмарних професій і сертифікацій AWS.</p>
+      </div>
+    </div>
+    <div class="about-copy">
+      <div class="eyebrow" style="color:var(--aws)">ПРО ПРОГРАМУ</div>
+      <h2 style="margin-top:12px; font-size: clamp(26px,3.4vw,36px);">Готова навчальна програма від AWS</h2>
+      <p><strong>AWS Academy</strong> надає закладам вищої освіти безкоштовну, повністю готову до викладання навчальну програму з хмарних обчислень. Курси розробляються AWS і регулярно оновлюються, щоб відповідати актуальному стану хмарних технологій.</p>
+      <p>Студенти отримують практичний досвід у пісочниці <strong>AWS Academy Learner Lab</strong> з доступом до понад 100 сервісів AWS, а також безкоштовну 12-місячну підписку на <strong>AWS Skill Builder</strong> і доступ до спільноти Emerging Talent Community після завершення курсу.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight" id="perks">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" style="color:var(--aws)">ЧОМУ ВАРТО ПРИЄДНАТИСЯ</div>
+      <h2>Переваги для студентів</h2>
+    </div>
+    <div class="perks-grid">
+      <div class="perk-card" data-reveal>
+        <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p>Кар'єра в одній з найбільш затребуваних і швидкозростаючих галузей ІТ.</p>
+      </div>
+      <div class="perk-card" data-reveal>
+        <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <p>Навички, які цінує індустрія — практичні лабораторні роботи в реальному середовищі AWS.</p>
+      </div>
+      <div class="perk-card" data-reveal>
+        <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <p>Безкоштовна 12-місячна підписка на AWS Skill Builder після проходження курсу.</p>
+      </div>
+      <div class="perk-card" data-reveal>
+        <div class="perk-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <p>Ексклюзивний доступ до спільноти Emerging Talent Community після завершення курсу.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight" id="courses">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" style="color:var(--aws)">НАВЧАЛЬНА ПРОГРАМА</div>
+      <h2>Курси AWS Academy</h2>
+      <p>Від базових концепцій хмари до архітектури, розробки, ML і роботи з даними.</p>
+    </div>
+
+    <div class="course-tabs">
+      <button class="ctab active" data-tab="foundational">Foundational · 6</button>
+      <button class="ctab" data-tab="associate">Associate · 5</button>
+      <button class="ctab" data-tab="labs">Labs · 2</button>
+    </div>
+
+    <div class="course-group active" id="tab-foundational">
+      <div class="course-grid">
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Foundational</span>
+          <h4>Cloud Foundations</h4>
+          <p>Вступний курс з огляду хмарних обчислень: основні сервіси AWS, безпека, архітектура, ціноутворення та підтримка.</p>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Foundational</span>
+          <h4>Generative AI Foundations</h4>
+          <p>Вступ до штучного інтелекту з акцентом на генеративний ШІ та його застосування в хмарних обчисленнях.</p>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Foundational</span>
+          <h4>Machine Learning Foundations</h4>
+          <p>Основи ML: вибір, навчання й розгортання власної моделі. Близько 20 годин лекцій, лабораторних робіт і проєктів.</p>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Foundational</span>
+          <h4>Data Center Technician (DCT)</h4>
+          <p>Технічна експертиза в експлуатації дата-центрів; бажані базові знання з механіки й електротехніки.</p>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Foundational</span>
+          <h4>Engineering Operations Technicians</h4>
+          <p>Основи фізичної інфраструктури дата-центру: електрика, батареї та генератори.</p>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Foundational</span>
+          <h4>Cloud Security Foundations</h4>
+          <p>Базові принципи кібербезпеки для хмарних обчислень через практичні сценарії й демонстрації.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-group" id="tab-associate">
+      <div class="course-grid">
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Associate</span>
+          <h4>Cloud Architecting</h4>
+          <p>Побудова ІТ-інфраструктури на AWS, підготовка до AWS Certified Solutions Architect – Associate.</p>
+          <div class="course-hours">~40 год · рекомендовано після Cloud Foundations</div>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Associate</span>
+          <h4>Cloud Developing</h4>
+          <p>Розробка з AWS SDK, найкращі практики створення й розгортання застосунків. Підготовка до AWS Certified Developer – Associate.</p>
+          <div class="course-hours">~40 год · рекомендовано після Cloud Foundations</div>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Associate</span>
+          <h4>Cloud Operations</h4>
+          <p>DevOps і cloud-ops ролі: автоматизація розгортання мереж і систем. Підготовка до AWS Certified SysOps Administrator – Associate.</p>
+          <div class="course-hours">~40 год · рекомендовано після Cloud Foundations</div>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Associate</span>
+          <h4>Data Engineering</h4>
+          <p>Збір, зберігання, підготовка, аналіз і візуалізація даних для аналітики й задач машинного навчання.</p>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Associate</span>
+          <h4>ML for Natural Language Processing</h4>
+          <p>Термінологія та застосування обробки природної мови (NLP) для розв'язання бізнес-задач.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-group" id="tab-labs">
+      <div class="course-grid">
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Lab</span>
+          <h4>AWS Academy Learner Lab</h4>
+          <p>Довготривале пісочницеве середовище: власні завдання викладача, аналітика витраченого часу й бюджету, доступ до понад 100 сервісів AWS.</p>
+        </div>
+        <div class="course-card" data-reveal>
+          <span class="course-tag">Lab Projects</span>
+          <h4>Проєкти без покрокових інструкцій</h4>
+          <p>Cloud Data Pipeline Builder, Cloud Web Application Builder, Cloud Security Builder та Microservices/CI-CD Pipeline Builder — капстоун-проєкти за принципами AWS Well-Architected Framework.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-cta" data-reveal>
+      <div>
+        <h3>Повний перелік активних інституцій AWS Academy</h3>
+        <p>AWS підтримує мережу університетів-учасників по всьому світу — переглянь офіційний перелік.</p>
+      </div>
+      <a href="https://aws.amazon.com/training/awsacademy/" target="_blank" rel="noopener" class="btn btn-aws">До сторінки AWS Academy →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="join">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" style="color:var(--aws)">ПОЧАТИ НАВЧАННЯ</div>
+      <h2>Як приєднатися</h2>
+      <p>Членство в AWS Academy оформлюється на рівні закладу освіти — окремої форми реєстрації студента на цьому сайті не потрібно.</p>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item" data-reveal>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Перевір відповідність критеріям</h4>
+          <p>Заклад повинен пропонувати акредитовані освітні програми (диплом, сертифікат чи курси підвищення кваліфікації).</p>
+          <ul>
+            <li>Заявник — уповноважений викладач або адміністратор програми від закладу</li>
+            <li>Заявку подають з інституційної електронної пошти</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-item" data-reveal>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Подай заявку від імені закладу</h4>
+          <p>Institution Application подає Program Administrator — особа, відповідальна за адміністрування програми AWS Academy в закладі.</p>
+          <p><a href="https://www.awsacademy.com/InstitutionApplication" target="_blank" rel="noopener">Подати заявку на сайті AWS Academy →</a></p>
+        </div>
+      </div>
+      <div class="step-item" data-reveal>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Почни навчання</h4>
+          <p>Після схвалення заявки заклад приймає умови програми, призначає викладачів AWS Academy курсів і пропонує план проведення занять.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="join-cta" data-reveal>
+      <h3>Готовий почати?</h3>
+      <p>Подай заявку на сайті AWS Academy або увійди в портал, якщо твій заклад уже є учасником програми.</p>
+      <div class="join-cta-actions">
+        <a href="https://www.awsacademy.com/InstitutionApplication" target="_blank" rel="noopener" class="btn btn-aws">Подати заявку →</a>
+        <a href="https://www.awsacademy.com/SiteLogin?startURL=%2Fforums%2F" target="_blank" rel="noopener" class="btn btn-ghost">Портал AWS Academy →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="fmeta">© 2026 AWS Academy · НН ІТС КПІ ім. Ігоря Сікорського · *знижка на іспит доступна викладачам</div>
+    <div class="flinks">
+      <a href="index.html">← Усі академії</a>
+      <a href="cisco.html">Cisco Academy</a>
+      <a href="huawei.html">Huawei ICT Academy</a>
+      <a href="https://aws.amazon.com/training/awsacademy/" target="_blank" rel="noopener">AWS Academy (офіційно)</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+<script>
+  document.querySelectorAll('.ctab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.ctab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.course-group').forEach(g => g.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

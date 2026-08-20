@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ITS Network Academies — КПІ ім. Ігоря Сікорського</title>
-<meta name="description" content="Портал мережевих академій Навчально-наукового інституту телекомунікаційних систем КПІ: Cisco Networking Academy, Huawei ICT Academy.">
+<meta name="description" content="Портал технологічних академій Навчально-наукового інституту телекомунікаційних систем КПІ: Cisco Networking Academy, Huawei ICT Academy, AWS Academy.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2711%27 fill=%27%2300BCEB%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/style.css">
 <style>
+  :root{ --aws: #FF9900; --aws-dim: #EC7211; --aws-glow: rgba(255,153,0,0.32); }
   body{ overflow-x:hidden; }
 
   .gate{
@@ -55,7 +56,7 @@
     left: calc(16.66% + 20px);
     right: calc(16.66% + 20px);
     z-index: 0;
-    background: linear-gradient(90deg, var(--cisco) 0%, var(--line-strong) 35%, var(--line-strong) 65%, var(--huawei) 100%);
+    background: linear-gradient(90deg, var(--cisco) 0%, var(--huawei) 50%, var(--aws) 100%);
     opacity: .45;
     transform: translateY(-50%);
   }
@@ -138,19 +139,39 @@
   .node-card.huawei .node-status .d{ background: var(--ok); box-shadow: 0 0 0 3px rgba(47,224,168,.18); }
   .node-card.huawei:hover .enter{ background: var(--huawei); color:#fff; border-color: var(--huawei); }
 
-  /* COMING SOON node */
-  .node-card.soon{ opacity: .94; }
-  .node-card.soon .node-logo{ background: var(--bg-raised); border: 1px dashed var(--line-strong); box-shadow:none; transition: all .28s ease; }
-  .node-card.soon .node-logo svg{ opacity: .6; }
-  .node-card.soon .node-status .d{ background: var(--warn); box-shadow: 0 0 0 3px rgba(242,183,5,.18); }
-  .node-card.soon:hover{
+  /* AWS node */
+  .node-card.aws:hover{
     transform: translateY(-8px);
-    border-color: var(--warn);
-    box-shadow: 0 20px 50px -12px rgba(242,183,5,.28);
+    border-color: var(--aws);
+    box-shadow: 0 20px 50px -12px var(--aws-glow);
   }
-  .node-card.soon:hover .node-logo{ border-style: solid; border-color: var(--warn); box-shadow: 0 0 26px rgba(242,183,5,.35); }
-  .node-card.soon .enter{ color: var(--text-faint); }
-  .node-card.soon:hover .enter{ background: var(--warn); color:#241a02; border-color: var(--warn); }
+  .node-card.aws .node-logo{ background: linear-gradient(135deg, var(--aws), var(--aws-dim)); box-shadow: 0 0 30px var(--aws-glow); }
+  .node-card.aws .node-status .d{ background: var(--ok); box-shadow: 0 0 0 3px rgba(47,224,168,.18); }
+  .node-card.aws:hover .enter{ background: var(--aws); color:#241a00; border-color: var(--aws); }
+
+  /* games teaser banner */
+  .games-teaser{
+    max-width: 1080px; margin: 20px auto 0;
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 18px 26px; position:relative; z-index:1;
+    transition: border-color .22s ease, transform .22s ease;
+  }
+  .games-teaser:hover{ border-color: var(--cisco); transform: translateY(-2px); }
+  .games-teaser .gt-left{ display:flex; align-items:center; gap:14px; }
+  .games-teaser .gt-icon{
+    width:42px; height:42px; border-radius:11px; flex:none;
+    background: linear-gradient(135deg, var(--cisco), var(--cisco-dim));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 18px var(--cisco-glow);
+  }
+  .games-teaser .gt-icon svg{ width:21px; height:21px; }
+  .games-teaser h4{ font-size:15.5px; margin-bottom:3px; }
+  .games-teaser p{ font-size:13px; color: var(--text-dim); margin:0; }
+  .games-teaser .gt-cta{
+    font-family: var(--font-mono); font-size:12.5px; color: var(--cisco);
+    display:flex; align-items:center; gap:6px; flex:none;
+  }
 
   .gate-bottom{
     text-align:center; margin-top: 54px;
@@ -210,21 +231,31 @@
         <div class="enter">Перейти до академії →</div>
       </a>
 
-      <a class="node-card soon" href="coming-soon.html" data-reveal>
-        <span class="tag">Вузол 03 · У розгортанні</span>
+      <a class="node-card aws" href="aws.html" data-reveal>
+        <span class="tag">Вузол 03 · Активний</span>
         <div class="node-logo">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.6" stroke-dasharray="3 3"/>
-            <path d="M12 8v4l2.5 2.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M6 17a4 4 0 01.5-7.97A5.5 5.5 0 0117 10.5a3.5 3.5 0 01-1 6.5H6z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h3>(COMING SOON)</h3>
-        <div class="desc">Назва уточнюється — зіграй у міні-гру, поки чекаєш</div>
-        <div class="node-status"><span class="d"></span> PENDING</div>
-        <div class="enter">Зіграти, поки чекаєш →</div>
+        <h3>AWS ACADEMY</h3>
+        <div class="desc">Cloud Architecting, ML, Data Engineering</div>
+        <div class="node-status"><span class="d"></span> ONLINE</div>
+        <div class="enter">Перейти до академії →</div>
       </a>
     </div>
   </div>
+
+  <a class="games-teaser" href="games.html" data-reveal>
+    <div class="gt-left">
+      <div class="gt-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19l4-6 3 3 3-5 4 8" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div>
+        <h4>Потрібно сконцентруватись?</h4>
+        <p>Дві міні-ігри на тему кібербезпеки — відпочинь п'ять хвилин між вузлами.</p>
+      </div>
+    </div>
+    <div class="gt-cta">Грати →</div>
+  </a>
 
   <div class="gate-bottom">
     Питання щодо вступу до академій — <a href="https://its.kpi.ua" target="_blank" rel="noopener">its.kpi.ua</a>
