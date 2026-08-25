@@ -20,8 +20,10 @@
     padding: 40px;
   }
   .reg-card h1{ font-size: clamp(24px,3.4vw,30px); margin: 12px 0 8px; }
-  .reg-card > p{ color: var(--text-dim); font-size: 14.5px; margin: 0 0 30px; }
+  .reg-card > p, .panel > p.lead{ color: var(--text-dim); font-size: 14.5px; margin: 0 0 30px; }
+  .hidden{ display:none !important; }
 
+  /* ---------- step 1: form ---------- */
   .form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .field{ display:flex; flex-direction:column; gap:7px; }
   .field.full{ grid-column: 1 / -1; }
@@ -41,16 +43,92 @@
   .form-submit{ margin-top: 18px; width:100%; }
   .form-msg{
     margin-top:16px; padding: 12px 14px; border-radius: 10px;
-    background: rgba(47,224,168,.08); border: 1px solid rgba(47,224,168,.3);
-    font-size:13px; font-family: var(--font-mono); color: var(--ok); display:none;
+    background: rgba(255,93,108,.08); border: 1px solid rgba(255,93,108,.3);
+    font-size:13px; font-family: var(--font-mono); color: var(--danger); display:none;
   }
   .form-msg.show{ display:block; }
+  .form-submit[disabled]{ opacity:.6; cursor:not-allowed; }
+
+  /* ---------- step 2: preview ---------- */
+  .preview-course{
+    font-family: var(--font-display); font-weight:700; font-size: 19px; color: var(--cisco);
+    margin: 4px 0 22px;
+  }
+  .preview-list{
+    display:flex; flex-direction:column; gap:0;
+    border:1px solid var(--line); border-radius: var(--radius-md);
+    overflow:hidden; margin-bottom: 22px;
+  }
+  .preview-row{
+    display:flex; justify-content:space-between; gap:16px;
+    padding: 13px 16px; border-bottom:1px solid var(--line);
+    background: var(--bg-raised);
+  }
+  .preview-row:last-child{ border-bottom:none; }
+  .preview-row .k{ font-family: var(--font-mono); font-size:12.5px; color: var(--text-faint); flex:none; }
+  .preview-row .v{ font-size:14px; color: var(--text); text-align:right; word-break:break-word; }
+  .preview-question{ font-size:16px; font-weight:600; margin: 0 0 18px; text-align:center; }
+  .preview-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+  .preview-actions .btn{ flex:1; }
+
+  /* ---------- step 3: success ---------- */
+  .success-icon{
+    width:56px; height:56px; border-radius:16px; margin-bottom:18px;
+    background: rgba(47,224,168,.12); border:1px solid rgba(47,224,168,.4);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .success-icon svg{ width:26px; height:26px; color: var(--ok); }
+
+  .checklist{ display:flex; flex-direction:column; gap:14px; margin-top: 26px; }
+  .check-item{
+    display:flex; gap:16px; align-items:flex-start;
+    background: var(--bg-raised); border:1px solid var(--line-strong); border-radius: var(--radius-md);
+    padding: 18px 20px;
+  }
+  .check-num{
+    width:30px; height:30px; border-radius:9px; flex:none;
+    background: var(--bg-panel); border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-display); font-weight:700; font-size:13px; color: var(--cisco);
+  }
+  .check-body h4{ font-size:14.5px; margin-bottom:5px; }
+  .check-body p{ font-size:13px; color: var(--text-dim); margin:0; line-height:1.5; }
+  .check-body a{ color: var(--cisco); }
+  .check-body a:hover{ text-decoration:underline; }
+
+  /* coming-soon illustration card (3rd checklist item) */
+  .check-item.soon{ align-items:center; }
+  .soon-illustration{
+    flex:none; width:56px; height:56px; border-radius:14px;
+    background: var(--bg-panel); border: 1px dashed var(--line-strong);
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .soon-illustration svg{ width:26px; height:26px; color: var(--text-faint); }
+  .soon-illustration::after{
+    content:""; position:absolute; inset:-1px; border-radius:14px;
+    border: 1px solid transparent; border-top-color: var(--cisco);
+    animation: soonspin 3.2s linear infinite;
+  }
+  @keyframes soonspin{ to{ transform: rotate(360deg); } }
+  .check-item.soon .check-body p{ display:flex; align-items:center; gap:8px; }
+  .soon-badge{
+    font-family: var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    color: var(--text-faint); border:1px solid var(--line-strong); border-radius:999px; padding:3px 9px;
+  }
+
+  .success-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top: 28px; }
+  .success-actions .btn{ flex:1; }
 
   @media (max-width: 700px){
     .form-grid{ grid-template-columns: 1fr; }
   }
+  @media (max-width: 560px){
+    .preview-row{ flex-direction:column; gap:3px; }
+    .preview-row .v{ text-align:left; }
+  }
   @media (max-width: 480px){
     .reg-card{ padding: 26px 20px; border-radius: var(--radius-md); }
+    .preview-actions, .success-actions{ flex-direction:column; }
   }
 </style>
 </head>
@@ -71,32 +149,106 @@
 
 <main class="wrap reg-shell">
   <div class="reg-card" data-reveal>
-    <div class="eyebrow"><span class="dot"></span> ЗАПИС НА НАВЧАННЯ</div>
-    <h1>Реєстрація на курси CCNA</h1>
-    <p>Заповніть форму — і ми зв'яжемось з вами для підтвердження та подальших інструкцій щодо старту курсу.</p>
 
-    <form id="regForm" onsubmit="return false;">
-      <div class="form-grid">
-        <div class="field"><label for="lastname">Прізвище</label><input id="lastname" type="text" required></div>
-        <div class="field"><label for="firstname">Ім'я</label><input id="firstname" type="text" required></div>
-        <div class="field"><label for="uni">ЗВО</label><input id="uni" type="text" placeholder="напр. КПІ ім. Ігоря Сікорського"></div>
-        <div class="field"><label for="faculty">Факультет</label><input id="faculty" type="text" placeholder="напр. ІТС"></div>
-        <div class="field"><label for="email">Електронна пошта</label><input id="email" type="email" required></div>
-        <div class="field"><label for="phone">Номер телефону</label><input id="phone" type="tel"></div>
-        <div class="field full"><label for="course">Оберіть курс</label>
-          <select id="course"><option>-- Оберіть курс --</option></select>
+    <!-- ============ STEP 1: FORM ============ -->
+    <div class="panel" id="formPanel">
+      <div class="eyebrow"><span class="dot"></span> ЗАПИС НА НАВЧАННЯ</div>
+      <h1>Реєстрація на курси CCNA</h1>
+      <p class="lead">Заповніть форму — на наступному кроці зможете перевірити дані перед відправкою.</p>
+
+      <form id="regForm">
+        <!-- Web3Forms: замініть YOUR_ACCESS_KEY_HERE на ключ, отриманий на web3forms.com -->
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+        <input type="hidden" name="subject" value="Нова заявка на реєстрацію — Cisco Academy ІТС КПІ">
+        <input type="hidden" name="from_name" value="Сайт Cisco Academy — форма реєстрації">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="form-grid">
+          <div class="field"><label for="lastname">Прізвище</label><input id="lastname" name="Прізвище" type="text" required></div>
+          <div class="field"><label for="firstname">Ім'я</label><input id="firstname" name="Ім'я" type="text" required></div>
+          <div class="field"><label for="uni">ЗВО</label><input id="uni" name="ЗВО" type="text" placeholder="напр. КПІ ім. Ігоря Сікорського"></div>
+          <div class="field"><label for="faculty">Факультет</label><input id="faculty" name="Факультет" type="text" placeholder="напр. ІТС"></div>
+          <div class="field"><label for="email">Електронна пошта</label><input id="email" name="Email" type="email" required></div>
+          <div class="field"><label for="phone">Номер телефону</label><input id="phone" name="Телефон" type="tel"></div>
+          <div class="field full"><label for="course">Оберіть курс</label>
+            <select id="course" name="Курс"><option value="">-- Оберіть курс --</option></select>
+          </div>
+          <div class="field full"><label for="comments">Додаткові коментарі</label><textarea id="comments" name="Коментар" placeholder="Необов'язково"></textarea></div>
         </div>
-        <div class="field full"><label for="comments">Додаткові коментарі</label><textarea id="comments" placeholder="Необов'язково"></textarea></div>
+        <button class="btn btn-cisco form-submit" type="submit" id="reviewBtn">Перевірити заявку →</button>
+        <div class="form-note">Дані нікуди не надсилаються, поки ви їх не підтвердите на наступному кроці.</div>
+      </form>
+    </div>
+
+    <!-- ============ STEP 2: PREVIEW / CONFIRM ============ -->
+    <div class="panel hidden" id="previewPanel">
+      <div class="eyebrow"><span class="dot"></span> ПОПЕРЕДНІЙ ПЕРЕГЛЯД</div>
+      <h1>Ви заповнили форму на курс:</h1>
+      <div class="preview-course" id="previewCourse">— курс не обрано —</div>
+
+      <div class="preview-list" id="previewList"></div>
+
+      <p class="preview-question">Надсилати?</p>
+      <div class="preview-actions">
+        <button class="btn btn-ghost" id="editBtn">← Редагувати</button>
+        <button class="btn btn-cisco" id="confirmBtn">Так, надіслати →</button>
       </div>
-      <button class="btn btn-cisco form-submit" type="submit">Зареєструватись</button>
-      <div class="form-note">Після реєстрації ми зв'яжемося з вами для підтвердження на вказану пошту.</div>
-      <div class="form-msg" id="formMsg">✓ Заявку прийнято — очікуйте лист на вказану пошту.</div>
-    </form>
+      <div class="form-msg" id="formMsgError">Не вдалося надіслати заявку. Спробуйте ще раз або напишіть нам напряму.</div>
+    </div>
+
+    <!-- ============ STEP 3: SUCCESS / THANK YOU ============ -->
+    <div class="panel hidden" id="successPanel">
+      <div class="success-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="eyebrow"><span class="dot"></span> ЗАЯВКУ НАДІСЛАНО</div>
+      <h1>Дякуємо за заповнення форми!</h1>
+      <p class="lead">Опрацювання заявки відбувається протягом робочого часу інструкторів. Поки чекаєте — можете перевірити наступне:</p>
+
+      <div class="checklist">
+        <div class="check-item">
+          <div class="check-num">1</div>
+          <div class="check-body">
+            <h4>Реєстрація на netacad.com</h4>
+            <p>Переконайтесь, що у вас є акаунт на порталі <a href="https://www.netacad.com" target="_blank" rel="noopener">netacad.com</a> — саме там відбуватиметься навчання.</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-num">2</div>
+          <div class="check-body">
+            <h4>Ім'я англійською, як у документі</h4>
+            <p>Прізвище та ім'я (First Name, Last Name) вказані англійською — точно як у паспорті чи студентському квитку.</p>
+          </div>
+        </div>
+        <div class="check-item soon">
+          <div class="soon-illustration">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <div class="check-body">
+            <h4>Ще одна порада</h4>
+            <p><span class="soon-badge">Coming soon</span> готуємо ще один корисний чекліст</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <a class="btn btn-ghost" href="cisco.html">До академії</a>
+        <a class="btn btn-cisco" href="catalog.html">Переглянути каталог курсів →</a>
+      </div>
+    </div>
+
   </div>
 </main>
 
 <script src="assets/script.js"></script>
 <script>
+  const formPanel = document.getElementById('formPanel');
+  const previewPanel = document.getElementById('previewPanel');
+  const successPanel = document.getElementById('successPanel');
+  const form = document.getElementById('regForm');
+  const previewList = document.getElementById('previewList');
+  const previewCourse = document.getElementById('previewCourse');
+  const msgErr = document.getElementById('formMsgError');
+  const confirmBtn = document.getElementById('confirmBtn');
+
   window.addEventListener('DOMContentLoaded', () => {
     const select = document.getElementById('course');
     if (typeof COURSES === 'undefined') return;
@@ -116,9 +268,77 @@
     });
   });
 
-  document.getElementById('regForm').addEventListener('submit', (e) => {
+  // labels shown in the preview, in display order
+  const PREVIEW_FIELDS = [
+    ['Прізвище', 'Прізвище'],
+    ["Ім'я", "Ім'я"],
+    ['ЗВО', 'ЗВО'],
+    ['Факультет', 'Факультет'],
+    ['Email', 'Електронна пошта'],
+    ['Телефон', 'Номер телефону'],
+    ['Коментар', 'Коментар']
+  ];
+
+  function showPanel(panel){
+    [formPanel, previewPanel, successPanel].forEach(p => p.classList.add('hidden'));
+    panel.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Step 1 -> Step 2: build preview, don't send anything yet
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    document.getElementById('formMsg').classList.add('show');
+    if (!form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const course = data.get('Курс');
+    previewCourse.textContent = course && course.trim() ? course : '— курс не обрано —';
+
+    previewList.innerHTML = '';
+    PREVIEW_FIELDS.forEach(([name, label]) => {
+      const value = (data.get(name) || '').toString().trim();
+      if (!value) return;
+      const row = document.createElement('div');
+      row.className = 'preview-row';
+      row.innerHTML = `<span class="k">${label}</span><span class="v"></span>`;
+      row.querySelector('.v').textContent = value;
+      previewList.appendChild(row);
+    });
+
+    msgErr.classList.remove('show');
+    showPanel(previewPanel);
+  });
+
+  // Step 2 -> back to Step 1 (data stays intact, nothing was sent)
+  document.getElementById('editBtn').addEventListener('click', () => showPanel(formPanel));
+
+  // Step 2 -> actually send to Web3Forms -> Step 3
+  confirmBtn.addEventListener('click', async () => {
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = 'Надсилаємо…';
+    msgErr.classList.remove('show');
+
+    try {
+      const formData = new FormData(form);
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        form.reset();
+        showPanel(successPanel);
+      } else {
+        msgErr.classList.add('show');
+      }
+    } catch (err) {
+      msgErr.classList.add('show');
+    } finally {
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = 'Так, надіслати →';
+    }
   });
 </script>
 </body>
