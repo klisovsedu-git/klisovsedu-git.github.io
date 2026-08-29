@@ -94,6 +94,12 @@
     transition: transform .22s ease, border-color .22s ease;
   }
   .course-card:hover{ transform: translateY(-4px); border-color: var(--aws); }
+  .course-icon{
+    width:34px; height:34px; border-radius:9px; margin-bottom:14px;
+    background: rgba(255,153,0,0.12); border:1px solid rgba(255,153,0,0.35);
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .course-icon svg{ width:17px; height:17px; color: var(--aws); }
   .course-tag{
     align-self:flex-start; font-family: var(--font-mono); font-size:10.5px; letter-spacing:.04em;
     padding:4px 9px; border-radius:999px; border:1px solid rgba(255,153,0,0.35); color: var(--aws);
@@ -102,6 +108,60 @@
   .course-card h4{ font-size:16px; margin-bottom:8px; }
   .course-card p{ color: var(--text-dim); font-size:13.3px; margin:0; flex:1; }
   .course-hours{ margin-top:14px; font-family: var(--font-mono); font-size:11.5px; color: var(--text-faint); }
+
+  /* coming-soon course placeholder */
+  .course-card.soon{
+    border-style: dashed; background: var(--bg-raised); opacity:.78;
+  }
+  .course-card.soon:hover{ transform:none; border-color: var(--line-strong); }
+  .course-card.soon .course-icon{
+    background: var(--bg-panel); border:1px dashed var(--line-strong);
+  }
+  .course-card.soon .course-icon svg{ color: var(--text-faint); }
+  .course-card.soon .course-tag{ opacity:.55; }
+  .course-card.soon p{ color: var(--text-faint); }
+  .soon-pill{
+    display:inline-flex; align-items:center; gap:6px; margin-top:14px; align-self:flex-start;
+    font-family: var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
+    color: var(--text-faint); border:1px dashed var(--line-strong); border-radius:999px; padding:5px 11px;
+  }
+  .soon-pill svg{ width:11px; height:11px; }
+
+  /* ---------- architecture illustration ---------- */
+  .arch-wrap{ margin-top: 44px; }
+  .arch-caption{
+    font-family: var(--font-mono); font-size:11.5px; color: var(--text-faint);
+    text-align:center; margin-bottom:20px; letter-spacing:.04em;
+  }
+  .arch-strip{
+    display:flex; align-items:center; justify-content:center; gap:0;
+    background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 30px 20px; overflow-x:auto;
+  }
+  .arch-node{
+    display:flex; flex-direction:column; align-items:center; gap:10px; flex:none; width:104px;
+  }
+  .arch-node .an-icon{
+    width:50px; height:50px; border-radius:13px;
+    background: var(--bg-raised); border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .arch-node .an-icon svg{ width:23px; height:23px; color: var(--text-dim); }
+  .arch-node span{ font-family: var(--font-mono); font-size:11px; color: var(--text-dim); text-align:center; }
+  .arch-node.highlight .an-icon{
+    background: rgba(255,153,0,0.14); border-color: var(--aws); box-shadow: 0 0 22px var(--aws-glow);
+  }
+  .arch-node.highlight .an-icon svg{ color: var(--aws); }
+  .arch-node.highlight span{ color: var(--text); font-weight:600; }
+  .arch-arrow{
+    flex:none; width:44px; height:2px; margin: 0 -2px 26px;
+    background: repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 12px);
+    position:relative;
+  }
+  .arch-arrow::after{
+    content:""; position:absolute; right:0; top:50%; transform:translateY(-50%);
+    border: 4px solid transparent; border-left-color: var(--line-strong);
+  }
 
   .catalog-cta{
     margin-top: 30px; display:flex; align-items:center; justify-content:space-between;
@@ -132,6 +192,58 @@
   .step-body a{ color: var(--aws); }
   .step-body a:hover{ text-decoration:underline; }
 
+  /* ---------- join: two paths ---------- */
+  .paths-grid{
+    display:grid; grid-template-columns: 1fr auto 1fr; gap: 22px; align-items:stretch;
+  }
+  .or-divider{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    font-family: var(--font-mono); font-size:12px; color: var(--text-faint);
+  }
+  .or-divider .line{ width:1px; flex:1; background: var(--line-strong); min-height:40px; }
+  .or-divider .badge{
+    border:1px solid var(--line-strong); border-radius:999px; padding:6px 12px;
+    text-transform:uppercase; letter-spacing:.06em; background: var(--bg-panel);
+  }
+  .path-card{
+    background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 30px; display:flex; flex-direction:column;
+  }
+  .path-card .path-tag{
+    font-family: var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color: var(--aws); margin-bottom:14px;
+  }
+  .path-card h3{ font-size:20px; margin-bottom:12px; }
+  .path-card p{ color: var(--text-dim); font-size:14px; margin:0 0 10px; line-height:1.6; }
+  .mentor-row{
+    display:flex; align-items:center; gap:14px; margin: 6px 0 18px;
+    padding: 14px 16px; background: var(--bg-raised); border:1px solid var(--line-strong); border-radius: var(--radius-md);
+  }
+  .mentor-avatar{
+    width:46px; height:46px; border-radius:12px; flex:none;
+    background: linear-gradient(135deg, var(--aws), var(--aws-dim));
+    display:flex; align-items:center; justify-content:center; box-shadow: 0 0 16px var(--aws-glow);
+  }
+  .mentor-avatar svg{ width:22px; height:22px; color:#241a00; }
+  .mentor-info h5{ font-size:14px; margin-bottom:2px; }
+  .mentor-info span{ font-family: var(--font-mono); font-size:11.5px; color: var(--text-faint); }
+  .path-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:auto; padding-top:14px; }
+  .path-links a{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family: var(--font-mono); font-size:12.5px;
+    padding: 10px 15px; border-radius:999px; border:1px solid var(--line-strong); color: var(--text);
+    transition: all .2s ease;
+  }
+  .path-links a svg{ width:14px; height:14px; }
+  .path-links a:hover{ border-color: var(--aws); color: var(--aws); }
+  .path-links a.primary{ background: var(--aws); border-color: var(--aws); color:#241a00; font-weight:600; }
+  .path-links a.primary:hover{ background:#ffb03a; color:#241a00; }
+  .path-meta{
+    display:flex; gap:16px; flex-wrap:wrap; margin: 4px 0 16px;
+    font-family: var(--font-mono); font-size:11.5px; color: var(--text-faint);
+  }
+  .path-meta b{ color: var(--text-dim); font-weight:500; }
+
   .join-cta{
     margin-top:34px; text-align:center;
     background: linear-gradient(160deg, rgba(255,153,0,0.1), var(--bg-panel));
@@ -147,10 +259,14 @@
     .perks-grid{ grid-template-columns: 1fr 1fr; }
     .course-grid{ grid-template-columns: 1fr 1fr; }
     .step-item{ grid-template-columns: 40px 1fr; }
+    .paths-grid{ grid-template-columns: 1fr; }
+    .or-divider{ flex-direction:row; padding: 4px 0; }
+    .or-divider .line{ width:auto; height:1px; flex:1; min-height:0; }
   }
   @media (max-width: 560px){
     .perks-grid{ grid-template-columns: 1fr; }
     .course-grid{ grid-template-columns: 1fr; }
+    .arch-strip{ justify-content:flex-start; }
   }
 </style>
 </head>
@@ -226,6 +342,41 @@
       <p>Студенти отримують практичний досвід у пісочниці <strong>AWS Academy Learner Lab</strong> з доступом до понад 100 сервісів AWS, а також безкоштовну 12-місячну підписку на <strong>AWS Skill Builder</strong> і доступ до спільноти Emerging Talent Community після завершення курсу.</p>
     </div>
   </div>
+
+  <div class="wrap arch-wrap">
+    <div class="arch-caption">СПРОЩЕНА АРХІТЕКТУРА ПІСОЧНИЦІ · AWS ACADEMY LEARNER LAB</div>
+    <div class="arch-strip" data-reveal>
+      <div class="arch-node">
+        <div class="an-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <span>Студент</span>
+      </div>
+      <div class="arch-arrow"></div>
+      <div class="arch-node highlight">
+        <div class="an-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6 17a4 4 0 01.5-7.97A5.5 5.5 0 0117 10.5a3.5 3.5 0 01-1 6.5H6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <span>Learner Lab (VPC)</span>
+      </div>
+      <div class="arch-arrow"></div>
+      <div class="arch-node">
+        <div class="an-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 10h16" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <span>EC2</span>
+      </div>
+      <div class="arch-arrow"></div>
+      <div class="arch-node">
+        <div class="an-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6c0-1.1 3.6-2 8-2s8 .9 8 2-3.6 2-8 2-8-.9-8-2z" stroke="currentColor" stroke-width="1.6"/><path d="M4 6v12c0 1.1 3.6 2 8 2s8-.9 8-2V6" stroke="currentColor" stroke-width="1.6"/><path d="M4 12c0 1.1 3.6 2 8 2s8-.9 8-2" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <span>S3</span>
+      </div>
+      <div class="arch-arrow"></div>
+      <div class="arch-node">
+        <div class="an-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6c0-1.1 3.6-2 8-2s8 .9 8 2-3.6 2-8 2-8-.9-8-2z" stroke="currentColor" stroke-width="1.6"/><path d="M4 6v5c0 1.1 3.6 2 8 2s8-.9 8-2V6" stroke="currentColor" stroke-width="1.6"/><path d="M4 11v5c0 1.1 3.6 2 8 2s8-.9 8-2v-5" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <span>RDS</span>
+      </div>
+      <div class="arch-arrow"></div>
+      <div class="arch-node">
+        <div class="an-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <span>IAM</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="section section-tight" id="perks">
@@ -272,67 +423,85 @@
     <div class="course-group active" id="tab-foundational">
       <div class="course-grid">
         <div class="course-card" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6 17a4 4 0 01.5-7.97A5.5 5.5 0 0117 10.5a3.5 3.5 0 01-1 6.5H6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
           <span class="course-tag">Foundational</span>
           <h4>Cloud Foundations</h4>
           <p>Вступний курс з огляду хмарних обчислень: основні сервіси AWS, безпека, архітектура, ціноутворення та підтримка.</p>
         </div>
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Foundational</span>
           <h4>Generative AI Foundations</h4>
-          <p>Вступ до штучного інтелекту з акцентом на генеративний ШІ та його застосування в хмарних обчисленнях.</p>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Foundational</span>
           <h4>Machine Learning Foundations</h4>
-          <p>Основи ML: вибір, навчання й розгортання власної моделі. Близько 20 годин лекцій, лабораторних робіт і проєктів.</p>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Foundational</span>
           <h4>Data Center Technician (DCT)</h4>
-          <p>Технічна експертиза в експлуатації дата-центрів; бажані базові знання з механіки й електротехніки.</p>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Foundational</span>
           <h4>Engineering Operations Technicians</h4>
-          <p>Основи фізичної інфраструктури дата-центру: електрика, батареї та генератори.</p>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Foundational</span>
           <h4>Cloud Security Foundations</h4>
-          <p>Базові принципи кібербезпеки для хмарних обчислень через практичні сценарії й демонстрації.</p>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
       </div>
     </div>
 
     <div class="course-group" id="tab-associate">
       <div class="course-grid">
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Associate</span>
           <h4>Cloud Architecting</h4>
-          <p>Побудова ІТ-інфраструктури на AWS, підготовка до AWS Certified Solutions Architect – Associate.</p>
-          <div class="course-hours">~40 год · рекомендовано після Cloud Foundations</div>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Associate</span>
           <h4>Cloud Developing</h4>
-          <p>Розробка з AWS SDK, найкращі практики створення й розгортання застосунків. Підготовка до AWS Certified Developer – Associate.</p>
-          <div class="course-hours">~40 год · рекомендовано після Cloud Foundations</div>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Associate</span>
           <h4>Cloud Operations</h4>
-          <p>DevOps і cloud-ops ролі: автоматизація розгортання мереж і систем. Підготовка до AWS Certified SysOps Administrator – Associate.</p>
-          <div class="course-hours">~40 год · рекомендовано після Cloud Foundations</div>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Associate</span>
           <h4>Data Engineering</h4>
-          <p>Збір, зберігання, підготовка, аналіз і візуалізація даних для аналітики й задач машинного навчання.</p>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
-        <div class="course-card" data-reveal>
+        <div class="course-card soon" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
           <span class="course-tag">Associate</span>
           <h4>ML for Natural Language Processing</h4>
-          <p>Термінологія та застосування обробки природної мови (NLP) для розв'язання бізнес-задач.</p>
+          <p>Курс з'явиться в програмі академії найближчим часом.</p>
+          <div class="soon-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Coming soon</div>
         </div>
       </div>
     </div>
@@ -340,11 +509,13 @@
     <div class="course-group" id="tab-labs">
       <div class="course-grid">
         <div class="course-card" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M9 3v5.5L4.5 17a2 2 0 001.8 3h11.4a2 2 0 001.8-3L15 8.5V3" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 3h6M6.5 14h11" stroke="currentColor" stroke-width="1.6"/></svg></div>
           <span class="course-tag">Lab</span>
           <h4>AWS Academy Learner Lab</h4>
           <p>Довготривале пісочницеве середовище: власні завдання викладача, аналітика витраченого часу й бюджету, доступ до понад 100 сервісів AWS.</p>
         </div>
         <div class="course-card" data-reveal>
+          <div class="course-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6l8-3 8 3-8 3-8-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 6v6l8 3 8-3V6M4 12v6l8 3 8-3v-6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
           <span class="course-tag">Lab Projects</span>
           <h4>Проєкти без покрокових інструкцій</h4>
           <p>Cloud Data Pipeline Builder, Cloud Web Application Builder, Cloud Security Builder та Microservices/CI-CD Pipeline Builder — капстоун-проєкти за принципами AWS Well-Architected Framework.</p>
@@ -367,44 +538,74 @@
     <div class="section-head">
       <div class="eyebrow" style="color:var(--aws)">ПОЧАТИ НАВЧАННЯ</div>
       <h2>Як приєднатися</h2>
-      <p>Членство в AWS Academy оформлюється на рівні закладу освіти — окремої форми реєстрації студента на цьому сайті не потрібно.</p>
+      <p>В ІТС є два шляхи отримати практику з AWS та хмарних технологій — обери зручний, або скористайся обома.</p>
     </div>
 
-    <div class="steps-list">
-      <div class="step-item" data-reveal>
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <h4>Перевір відповідність критеріям</h4>
-          <p>Заклад повинен пропонувати акредитовані освітні програми (диплом, сертифікат чи курси підвищення кваліфікації).</p>
-          <ul>
-            <li>Заявник — уповноважений викладач або адміністратор програми від закладу</li>
-            <li>Заявку подають з інституційної електронної пошти</li>
-          </ul>
+    <div class="paths-grid">
+      <div class="path-card" data-reveal>
+        <div class="path-tag">Шлях 1 · Менторство</div>
+        <h3>DevOps Mentoring Program</h3>
+        <p>Програма менторства з DevOps та хмарних технологій, яку з 2022 року веде сертифікований викладач кафедри ІТТ.</p>
+
+        <div class="mentor-row">
+          <div class="mentor-avatar">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="white" stroke-width="1.7"/><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="white" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </div>
+          <div class="mentor-info">
+            <h5>Алєксєєв Микола Олександрович</h5>
+            <span>Доцент кафедри ІТТ · CKA · Microsoft Certified</span>
+          </div>
+        </div>
+
+        <p>Ментор веде програму з 2022 року, готує учасників до практичної роботи з хмарною інфраструктурою, контейнеризацією та CI/CD на реальних кейсах.</p>
+
+        <div class="path-links">
+          <a href="https://itt-its.kpi.ua/alieksieiev-mykola-oleksandrovych/" target="_blank" rel="noopener" class="primary">Профіль інструктора →</a>
+          <a href="https://t.me/n_alexeyev" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M21 4L2.5 11.5l6 2m12.5-9.5L14.5 20l-6-6.5m12.5-9.5L8.5 13.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            Telegram
+          </a>
+          <a href="https://linkedin.com/in/nikolayalexeyev" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M7 10v6M7 7.5v.01M11 16v-4c0-1.2 1-2 2.2-2 1.2 0 1.8.8 1.8 2v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            LinkedIn
+          </a>
         </div>
       </div>
-      <div class="step-item" data-reveal>
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <h4>Подай заявку від імені закладу</h4>
-          <p>Institution Application подає Program Administrator — особа, відповідальна за адміністрування програми AWS Academy в закладі.</p>
-          <p><a href="https://www.awsacademy.com/InstitutionApplication" target="_blank" rel="noopener">Подати заявку на сайті AWS Academy →</a></p>
-        </div>
+
+      <div class="or-divider">
+        <div class="line"></div>
+        <div class="badge">та / або</div>
+        <div class="line"></div>
       </div>
-      <div class="step-item" data-reveal>
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <h4>Почни навчання</h4>
-          <p>Після схвалення заявки заклад приймає умови програми, призначає викладачів AWS Academy курсів і пропонує план проведення занять.</p>
+
+      <div class="path-card" data-reveal>
+        <div class="path-tag">Шлях 2 · Дисципліна за вибором</div>
+        <h3>Центри обробки даних та хмарні технології</h3>
+        <p>Вибіркова дисципліна освітньої програми «Інформаційно-комунікаційні технології» — окремий розділ курсу присвячений хмарним технологіям на прикладі AWS.</p>
+
+        <div class="path-meta">
+          <span><b>4 курс</b> · осінній семестр</span>
+          <span><b>4 кредити</b> · 120 год</span>
+          <span><b>Лектор:</b> М. О. Алєксєєв</span>
+        </div>
+
+        <p>Програма охоплює технології ЦОД, хмарні сервіси AWS (IAM, S3, EC2, RDS, VPC, Lambda), а також практики DevOps — CI/CD, Infrastructure-as-Code, контейнеризацію.</p>
+
+        <div class="path-links">
+          <a href="https://itt-its.kpi.ua/wp-content/uploads/2024/08/PV-13_Centry-obrobky-danyh.pdf" target="_blank" rel="noopener" class="primary">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            Силабус дисципліни (PDF) →
+          </a>
         </div>
       </div>
     </div>
 
     <div class="join-cta" data-reveal>
-      <h3>Готовий почати?</h3>
-      <p>Подай заявку на сайті AWS Academy або увійди в портал, якщо твій заклад уже є учасником програми.</p>
+      <h3>Не знаєш, з чого почати?</h3>
+      <p>Напиши інструктору в Telegram — він підкаже, який формат підійде саме тобі: менторська програма чи дисципліна за вибором.</p>
       <div class="join-cta-actions">
-        <a href="https://www.awsacademy.com/InstitutionApplication" target="_blank" rel="noopener" class="btn btn-aws">Подати заявку →</a>
-        <a href="https://www.awsacademy.com/SiteLogin?startURL=%2Fforums%2F" target="_blank" rel="noopener" class="btn btn-ghost">Портал AWS Academy →</a>
+        <a href="https://t.me/n_alexeyev" target="_blank" rel="noopener" class="btn btn-aws">Написати в Telegram →</a>
+        <a href="https://aws.amazon.com/training/awsacademy/" target="_blank" rel="noopener" class="btn btn-ghost">Про AWS Academy офіційно →</a>
       </div>
     </div>
   </div>
